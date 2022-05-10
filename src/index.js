@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import {ApolloClient, ApolloProvider, InMemoryCache} from "@apollo/client";
+import TYPE_DEFS from "./schema.graphql";
 
 const client = new ApolloClient(
     {
         connectToDevTools: true,
-        uri: 'https://48p1r2roz4.sse.codesandbox.io',
-        cache: new InMemoryCache()
+        uri: "https://countries.trevorblades.com/",
+        cache: new InMemoryCache(),
+        typeDefs: TYPE_DEFS
+
     });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
