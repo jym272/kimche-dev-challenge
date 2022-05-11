@@ -42,6 +42,8 @@
   "devDependencies": {
     "@commitlint/cli": "^16.2.4",
     "@commitlint/config-conventional": "^16.2.4",
+    "@types/react-router": "^5.1.18",
+    "@types/react-router-dom": "^5.3.3",
     "husky": "^8.0.1"
   }
 }
