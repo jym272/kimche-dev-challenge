@@ -20,10 +20,22 @@ const getCountries = gql`
 function App() {
     // const {loading, error, data} = useQuery(getCountries);
     const themes = [LightTheme, DarkTheme];
-    const [actualTheme, setTheme] = useState(themes[0]);
+    const darkMode = localStorage.getItem("darkMode");
+    let index=0;
+    if (darkMode) {
+        const item = JSON.parse(darkMode);
+        index = !!item.darkMode ? 0 : 1;
+    }
+    const [actualTheme, setTheme] = useState(themes[index]);
     const invertTheme = () => {
-        setTheme((prevTheme) => themes[(themes.indexOf(prevTheme) + 1) %
-                                       themes.length]);
+        setTheme((prevTheme) =>{
+            console.log(themes.indexOf(prevTheme))
+            const option = !!themes.indexOf(prevTheme);
+            const item = {
+                darkMode: option,
+            }
+            localStorage.setItem('darkMode', JSON.stringify(item));
+            return themes[(themes.indexOf(prevTheme) + 1) % themes.length]});
     };
     // if (loading) return <p>Loading...</p>;
     // if (error) return <p>Error :(</p>;
@@ -34,6 +46,7 @@ function App() {
         colors: actualTheme.colors,
         invertTheme: invertTheme,
         body: actualTheme.body,
+        navigation: actualTheme.navigation,
     }}>
         <GlobalStyle/>
         <BrowserRouter>

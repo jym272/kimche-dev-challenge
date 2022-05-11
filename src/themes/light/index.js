@@ -1,11 +1,12 @@
 
 export const LightTheme = {
     colors:{
-        primary: '#f8049c',
+        primary: 'white',
         secondary: '#fdd54f',
+        orange_bar: '#E97C57',
     },
     body: {
-        background: '#fafafa',
+        background: '#e2dada',
         color: '#333',
     },
 }
