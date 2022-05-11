@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import {ApolloClient, ApolloProvider, InMemoryCache} from "@apollo/client";
 import TYPE_DEFS from "./schema.graphql";
+
 
 const client = new ApolloClient(
     {
@@ -13,6 +13,10 @@ const client = new ApolloClient(
         typeDefs: TYPE_DEFS
 
     });
+
+
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
