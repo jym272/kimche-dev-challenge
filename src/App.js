@@ -2,18 +2,8 @@ import {ThemeProvider} from 'styled-components'
 import {DarkTheme, GlobalStyle, LightTheme} from "./themes";
 import {useState} from "react";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import {About, Home, NotFound, Search, SearchCountry} from "./components";
-import {gql, useQuery} from "@apollo/client";
+import {About, Home, NotFound, Search, SearchCountryComponent} from "./components";
 
-
-const getCountries = gql`
-    query getCountries {
-        countries {
-            name
-            code
-        }
-    }
-`;
 
 function App() {
     const themes = [LightTheme, DarkTheme];
@@ -35,11 +25,6 @@ function App() {
             return themes[(themes.indexOf(prevTheme) + 1) % themes.length]
         });
     };
-    const {loading, error, data} = useQuery(getCountries);
-    //
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :(</p>;
-    console.log(data);
 
     return <ThemeProvider theme={{
         colors: actualTheme.colors,
@@ -54,7 +39,7 @@ function App() {
                     <Route path="search" element={<Search/>}/>
                     <Route path="about" element={<About/>}/>
                     <Route path="search/:country_name"
-                           element={<SearchCountry/>}>
+                           element={<SearchCountryComponent/>}>
                         {/*  <Route
                             index
                             element={
