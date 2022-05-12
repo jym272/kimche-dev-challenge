@@ -8,10 +8,16 @@ const CountriesByContinentsStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  //height: 100%;
+  //padding: 0 200px;
+  //margin : 0 30px;
 
   .input {
     display: flex;
-    width: 70%;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 30px;
+    //min-width: 500px;
 
     .search__button_svg {
       border-radius: 0 5px 5px 0;

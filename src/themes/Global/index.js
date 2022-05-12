@@ -7,6 +7,7 @@ export const GlobalStyle = createGlobalStyle`
     monospace;
   }
 
+  
   body {
     background: ${({theme}) => theme.body.background};
     min-height: 100vh;
