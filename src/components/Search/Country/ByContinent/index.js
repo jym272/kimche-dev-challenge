@@ -4,19 +4,26 @@ import styled from 'styled-components'
 import {SearchCountry} from "../../../UI";
 import {GridOfCountries} from "../../../Grid";
 
-const CountriesByContinentsStyled = styled.div`
+const CountriesByContinentsStyled = styled.section`
   display: flex;
+  //align-self: center;
   flex-direction: column;
-  align-items: center;
+  position: relative;
+  //align-items: center;
+  //justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   //height: 100%;
   //padding: 0 200px;
   //margin : 0 30px;
 
   .input {
     display: flex;
+    //align-self: center;
     width: 100%;
     max-width: 1200px;
-    margin-bottom: 30px;
+    margin: 8px auto 0px auto;
     //min-width: 500px;
 
     .search__button_svg {
@@ -29,41 +36,57 @@ const CountriesByContinentsStyled = styled.div`
       border: 1px solid white;
       margin: 0;
       height: 50px;
-
       align-self: center;
     }
+
   }
 
 
-
-
+  .info__message {
+    padding: 0 0 0 20px;
+    color: ${({theme}) => theme.colors.orange_bar};
+    position: absolute;
+    transform: translateY(70px);
+    top: 0;
+    z-index: 3;
+  }
 `;
 
 
 export const CountriesByContinents = ({continents, country_name}) => {
 
     const [country_name_filter, setCountryNameFilter] = useState(country_name);
+    const [infoMessage, setInfoMessage] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
+        setInfoMessage('');
         let timer;
-        if (country_name_filter === "") {
-            timer = setTimeout(() => {
+        switch (country_name_filter.trim().length) {
+            case 0:
+                timer = setTimeout(() => {
+                    navigate(`/search/`);
+                }, 1500);
+                break;
+            case 1:
+                timer = setTimeout(() => {
+                    setInfoMessage('please type at least 2 letters');
+                }, 600);
+                break;
+            default:
                 navigate(`/search/${country_name_filter}?option=continent`);
-            }, 2000);
-        }else{
-            navigate(`/search/${country_name_filter}?option=continent`);
-
+                break;
         }
         return () => clearTimeout(timer);
-
     }, [country_name_filter, navigate]);
 
     return <CountriesByContinentsStyled searching={!!country_name_filter}>
         <SearchCountry
+            placeholder={"Returning home..."}
             className={"input"}
             valueInput={country_name_filter}
             onChangeInput={(e) => setCountryNameFilter(e.target.value)}/>
+        {!!infoMessage && <div className={"info__message"}>{infoMessage}</div>}
         <GridOfCountries array={continents}/>
 
     </CountriesByContinentsStyled>

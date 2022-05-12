@@ -5,7 +5,6 @@ const SearchInput = styled.input.attrs(
         type: 'text',
         name: 'search',
         id: 'search',
-        placeholder: 'Search...',
         autoComplete: 'off',
         required: true,
         autoFocus: true,
@@ -33,10 +32,11 @@ const SearchInput = styled.input.attrs(
 
 
 
-export const SearchCountry =({className, Handler, valueInput, onChangeInput})=>{
+export const SearchCountry =({className, Handler, valueInput, onChangeInput, placeholder})=>{
 
     return<form className={className} onSubmit={Handler}>
         <SearchInput
+            placeholder={placeholder}
             value={valueInput}
             onChange={onChangeInput}
         >

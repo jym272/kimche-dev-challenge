@@ -40,7 +40,13 @@ export const StoreProvider = ({children}) => {
                     countries: new Map()
                 }
                 continent.countries.forEach(country => {
-                    continentObject.countries.set(country.code, country.name)
+                    const countryObject ={
+                        name: country.name,
+                        // code: country.code,
+                        emoji: country.emoji,
+                        emojiU: country.emojiU
+                    }
+                    continentObject.countries.set(country.code, countryObject)
                 })
                 setContinents(
                     prevContinents => [...prevContinents, continentObject])
@@ -59,9 +65,9 @@ export const StoreProvider = ({children}) => {
                 name: continent.name,
                 countries: new Map()
             }
-            for (const [code, countryName] of continent.countries) {
-                if (countryName.toLowerCase().includes(input)) {
-                    continentObject.countries.set(code, countryName)
+            for (const [code, country] of continent.countries) {
+                if (country.name.toLowerCase().includes(input)) {
+                    continentObject.countries.set(code, country)
                 }
             }
             continents_.push(continentObject)

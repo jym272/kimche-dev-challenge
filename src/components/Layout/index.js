@@ -14,6 +14,7 @@ const FooterStyled = styled.footer`
   text-align: center;
   user-select: none;
   color: #ffffff;
+  white-space: nowrap; //TODO: fix for mobile site 
   
   span:first-of-type{
     padding-left: 3rem;
@@ -32,20 +33,21 @@ const FooterStyled = styled.footer`
     align-items: center;
     
     span:first-of-type{
-      padding-right: 0.5rem;
+      padding-right: 0.6rem;
     }
     svg:first-of-type {
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       &:hover{
         cursor: pointer;
-        //color: #0077b5;
-        //background: white;
-        //border-radius: 25%;
+        transform: scale(1.2);
       }
-      //margin-right: 1rem;
     }
     
     svg +svg{
       margin-left: 1rem;
+    }
+    span:last-of-type{
+      padding-left: 0.6rem;
     }
   }
   .email{
@@ -84,6 +86,7 @@ const Layout = props => {
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
+                    onClick = {() => window.open("https://www.linkedin.com/in/jym272/", "_blank")}
                 >
                     <path
                         fill="currentColor"

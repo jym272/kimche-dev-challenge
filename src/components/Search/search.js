@@ -157,6 +157,7 @@ export const Search = () => {
 
 
         <SearchCountry
+            placeholder={"Search for a country..."}
             Handler={findCountryHandler}
             valueInput={input}
             onChangeInput={(e) => setInput(e.target.value)}

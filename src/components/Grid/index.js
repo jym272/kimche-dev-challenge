@@ -6,19 +6,16 @@ const GridStyled = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   grid-gap: 2rem;
-  grid-auto-rows: minmax(300px,auto );
   grid-auto-flow: dense;
   justify-items: center;
   align-items: center;
   margin: 0 auto;
+  padding: 40px 0  40px 0;
   width: 100%;
-  max-width: 1200px;
-  padding: 20px;
   height: 100%;
-  //min-height: 50vh;
+  min-height: 76vh;
   overflow: hidden;
-  //position: sticky;
-  //z-index: 1;
+  position: relative;
   //@media (max-width: 768px) {
   //  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   //}
@@ -26,20 +23,68 @@ const GridStyled = styled.section`
   .grid-item {
     position: relative;
     color: #ffffeb;
-    width: 100%;
+    width: 99%;
     height: 100%;
     background-color: #303340;
+    border-radius: 15px;
+    border: 1px solid #303340;
     //overflow: hidden;
+    &::before,
+    &::after {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      transform-origin: center;
+
+    }
+
+    &::before {
+      border-top: 0.1em solid #ffffeb;
+      border-bottom: 0.1em solid #ffffeb;
+      transform: scale3d(0,1,1);
+
+    }
+
+    &::after {
+      border-left: 0.1em solid #ffffeb;
+      border-right: 0.1em solid #ffffeb;
+      transform: scale3d(1,0,1);
+
+
+    }
+
+    &:hover::before,
+    &:hover::after {
+      transform: scale3d(1,1,1);
+      transition: transform 900ms;
+      animation: border-radius-a 900ms forwards;
+    }
+    @keyframes border-radius-a {
+      0% {
+        border-radius: 0;
+      }
+      70% {
+        border-radius: 0;
+      }
+      100% {
+        border-radius: 15px;
+      }
+    }
 
     h1 {
-      font-size: 2rem;
+      font-size: 1.7rem;
       align-self: center;
       margin: 0 auto;
       padding: 20px 20px;
     }
 
     &:hover {
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      //background-color: hsla(228, 14%, 21%, 1.0);
+      //box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
 
 
