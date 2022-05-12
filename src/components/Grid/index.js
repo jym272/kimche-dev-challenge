@@ -13,9 +13,9 @@ const GridStyled = styled.section`
   margin: 0 auto;
   width: 100%;
   max-width: 1200px;
-  padding: 0;
+  padding: 20px;
   height: 100%;
-  //min-height: 100vh;
+  //min-height: 50vh;
   overflow: hidden;
   //position: sticky;
   //z-index: 1;
@@ -48,7 +48,7 @@ const GridStyled = styled.section`
 
 
 export const GridOfCountries = ({array}) => {
-    console.log(array);
+    // console.log(array);
 
     const grid = array.map(
         (item, index) => {

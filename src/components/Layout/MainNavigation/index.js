@@ -1,6 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import styled, {ThemeContext} from "styled-components";
-import React from "react";
+import React, {useContext} from "react";
+import {CountryStore} from "../../Store";
 
 const OrangeBar = styled.div`
   background-color: ${({theme}) => theme.colors.orange_bar};
@@ -18,8 +19,9 @@ const NavigationStyled = styled.nav`
   .toggle__theme {
     display: flex;
     align-items: center;
-    padding: 0.4rem;
+    padding: 0.4rem; //hover effect
     transition: all 0.2s ease-in-out;
+    transform: translateX(-14px); //center
 
     &:hover {
       cursor: pointer;
@@ -67,7 +69,8 @@ const MainNavigation = props => {
     const {invertTheme, colors} = React.useContext(ThemeContext)
     const isBlackThemeActive = colors.primary === 'black'
     const navigate = useNavigate()
-    const isFrontPage = true;
+    const context = useContext(CountryStore)
+    const isFrontPage = context.isHomePage;
 
 
     return <NavigationStyled active={isBlackThemeActive}>
@@ -76,7 +79,7 @@ const MainNavigation = props => {
             <nav>
                 <ul>
 
-                    {isFrontPage &&
+                    {!isFrontPage &&
                      <li>
                          <div className={"toggle__theme"}>
                              <svg onClick={() => {navigate("search/")}}

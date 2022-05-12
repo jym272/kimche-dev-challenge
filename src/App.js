@@ -16,7 +16,7 @@ function App() {
     const [actualTheme, setTheme] = useState(themes[index]);
     const invertTheme = () => {
         setTheme((prevTheme) => {
-            console.log(themes.indexOf(prevTheme))
+            // console.log(themes.indexOf(prevTheme))
             const option = !!themes.indexOf(prevTheme);
             const item = {
                 darkMode: option,

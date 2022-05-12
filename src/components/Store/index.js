@@ -3,6 +3,8 @@ import {gql, useQuery} from "@apollo/client";
 
 const defaultValue = {
     continents: [],
+    isHomePage: false,
+    setHomePage:(option)=>{},
     continentsCountriesIncludes:(inputCountryName)=>{}
 };
 
@@ -26,6 +28,7 @@ const getContinents = gql`
 
 export const StoreProvider = ({children}) => {
     const [continents, setContinents] = useState([]);
+    const [isHomePage, setIsHomePage] = useState(false);
     const {loading, error, data} = useQuery(getContinents);
 
 
@@ -66,13 +69,19 @@ export const StoreProvider = ({children}) => {
         return continents_
     }
 
+    const setHomePage=(option)=>{
+        setIsHomePage(option)
+    }
+
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
     return (
         <CountryStore.Provider value={{
             continents,
-            continentsCountriesIncludes
+            continentsCountriesIncludes,
+            isHomePage,
+            setHomePage,
         }}>
             {children}
         </CountryStore.Provider>

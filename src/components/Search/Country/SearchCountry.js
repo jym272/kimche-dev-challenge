@@ -1,5 +1,5 @@
 import {Outlet, useLocation, useParams} from "react-router-dom";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {CountryStore} from "../../Store";
 import {NotFound} from "../../NotFound";
 import {CountriesByContinents} from "./ByContinent";
@@ -13,6 +13,15 @@ export const SearchCountryComponent = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const option = queryParams.get('option');
+
+
+    useEffect(()=>{
+        context.setHomePage(false)
+    },[context]) //first update store provider, then render this component
+
+
+
+
     // console.log(country_name, option)
 
     let country = country_name

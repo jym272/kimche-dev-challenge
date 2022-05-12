@@ -1,7 +1,9 @@
 import styled from 'styled-components'
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {AboutFooterStyled, LogoStyled, SearchCountry} from "../UI";
+import {LogoStyled, SearchCountry} from "../UI";
+import {AboutFooter} from "../About";
+import {CountryStore} from "../Store";
 
 const SearchStyled = styled.section`
   display: flex;
@@ -19,7 +21,8 @@ const SearchStyled = styled.section`
 
   .input {
     display: flex;
-    width: 70%;
+    width: 60%;
+    max-width: 800px;
 
     .search__button_svg {
       border-radius: 0 5px 5px 0;
@@ -35,7 +38,8 @@ const SearchStyled = styled.section`
       align-self: center;
     }
   }
-  .invalid__input{
+
+  .invalid__input {
     position: absolute;
     transform: translateY(110px);
     color: green;
@@ -78,7 +82,7 @@ const SearchStyled = styled.section`
     animation: none;
     transform: translateX(-12px);
   }
-  
+
 `;
 
 const OptionsSearch = styled.div`
@@ -105,14 +109,17 @@ const OptionsSearch = styled.div`
 `;
 
 
-
-
 export const Search = () => {
     const [languageOption, setLanguageOption] = useState(false);
     const [optionAnimationStyle, setOptionAnimationStyle] = useState(
         "select__line__init");
     const [input, setInput] = useState("");
     const [invalidInput, setInvalidInput] = useState("");
+    const context = useContext(CountryStore);
+
+    useEffect(()=>{
+        context.setHomePage(true)
+    },[context]) //first update store provider, then render this component
 
     let navigate = useNavigate();
 
@@ -132,13 +139,14 @@ export const Search = () => {
         const regex = /^[a-zA-Z\[\]\.]{2,}?$/;
 
         if (!regex.test(input.trim())) {
-            setInvalidInput("at least 2" +
-                            " alphabetic characters and special characters" +
-                            " like \"[\" \"]\" and \".\" are allowed");
+            setInvalidInput(
+                "at least 2" + " alphabetic characters and special characters" +
+                " like \"[\" \"]\" and \".\" are allowed");
             return
         }
 
-        navigate(`/search/${input}?option=${!languageOption ?"continent":"language"}`);
+        navigate(`/search/${input}?option=${!languageOption ? "continent" :
+                                            "language"}`);
     }
 
     return <SearchStyled searching={!!input}>
@@ -152,8 +160,9 @@ export const Search = () => {
             Handler={findCountryHandler}
             valueInput={input}
             onChangeInput={(e) => setInput(e.target.value)}
-            className={"input"} />
-        {!!invalidInput && <span className={"invalid__input"}>{invalidInput}</span>}
+            className={"input"}/>
+        {!!invalidInput &&
+         <span className={"invalid__input"}>{invalidInput}</span>}
 
 
         <OptionsSearch>
@@ -169,17 +178,8 @@ export const Search = () => {
                         optionAnimationStyle}>
             {}
         </div>
-        <AboutFooterStyled >
-            <span>
-                {}
-            </span>
-            <span>
-                {}
-            </span>
-            <span>
-                {}
-            </span>
-        </AboutFooterStyled>
+        <AboutFooter/>
     </SearchStyled>
+
 }
 
