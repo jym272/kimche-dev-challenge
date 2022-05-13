@@ -149,6 +149,19 @@ export const Search = () => {
                                             "language"}`);
     }
 
+
+
+    document.onkeydown = (e) => {
+        e = e || window.event;
+        if (e.keyCode === 37) {
+            setLanguageOption(false)
+            // console.log('left arrow pressed')
+        } else if (e.keyCode === 39) {
+            languageOptionHandler()
+            // console.log('right arrow pressed')
+        }
+    }
+
     return <SearchStyled searching={!!input}>
         <LogoStyled>
             <span>country</span>

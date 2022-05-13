@@ -3,6 +3,15 @@ import styled from "styled-components";
 import {useEffect, useState} from "react";
 
 
+const NotFoundStyled = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  height: 100%;
+  //background-color: #f5f5f5;
+`;
+
 const GridStyled = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -11,7 +20,7 @@ const GridStyled = styled.section`
   justify-items: center;
   align-items: center;
   margin: 0 auto;
-  padding: 40px 0  40px 0;
+  padding: 40px 0 40px 0;
   width: 100%;
   height: 100%;
   min-height: 76vh;
@@ -30,6 +39,7 @@ const GridStyled = styled.section`
     border-radius: 15px;
     border: 1px solid #303340;
     overflow: hidden;
+
     &::before,
     &::after {
       content: '';
@@ -46,22 +56,23 @@ const GridStyled = styled.section`
     &::before {
       border-top: 0.1em solid #ffffeb;
       border-bottom: 0.1em solid #ffffeb;
-      transform: scale3d(0,1,1);
+      transform: scale3d(0, 1, 1);
 
     }
 
     &::after {
       border-left: 0.1em solid #ffffeb;
       border-right: 0.1em solid #ffffeb;
-      transform: scale3d(1,0,1);
+      transform: scale3d(1, 0, 1);
     }
 
     &:hover::before,
     &:hover::after {
-      transform: scale3d(1,1,1);
+      transform: scale3d(1, 1, 1);
       transition: transform 900ms;
       animation: border-radius-a 900ms forwards;
     }
+
     @keyframes border-radius-a {
       0% {
         border-radius: 0;
@@ -88,24 +99,29 @@ export const GridOfCountries = ({array, option}) => {
     const [grid, setGrid] = useState([]);
 
     useEffect(() => {
-        const grid_ = array.map(
+        const grid__ = []
+        array.forEach(
             (item, index) => {
-                if (item.countries.size === 0 && option ==="language"){
-                    return null;
-                }else
-                    return (
+                if (!(item.countries.size === 0 && option === "language")) {
+                    grid__.push(
                         <div key={index} className="grid-item">
                             <h1>{item.name}</h1>
                             <ListOfCountries map={item.countries}/>
                         </div>
                     );
+                }
             }
         );
-        setGrid(grid_);
+        setGrid(grid__);
     }, [array, option]);
 
-    return <GridStyled>
-        {grid}
-    </GridStyled>
+    return <>
+        {option === "language" && grid.length === 0 ?
+         <NotFoundStyled>No countries found</NotFoundStyled> :
+         <GridStyled>
+             {grid}
+         </GridStyled>
+        }
+    </>
 
 }

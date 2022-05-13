@@ -1,4 +1,4 @@
-import {Outlet, useLocation, useParams} from "react-router-dom";
+import {Outlet, useLocation, useNavigate, useParams} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import {CountryStore} from "../../Store";
 import {NotFound} from "../../NotFound";
@@ -15,6 +15,15 @@ export const SearchCountryComponent = () => {
     const option = queryParams.get('option');
     const [countriesArray, setCountriesArray] = useState([]);
     const [incorrectOption, setIncorrectOption] = useState(false);
+    const navigate= useNavigate();
+
+
+    document.onkeydown = (e) => {
+        e = e || window.event;
+        if (e.key === "Escape") {
+            navigate('/');
+        }
+    }
 
 
     useEffect(() => {
