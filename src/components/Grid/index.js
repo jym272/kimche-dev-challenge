@@ -88,7 +88,6 @@ export const GridOfCountries = ({array, option}) => {
     const [grid, setGrid] = useState([]);
 
     useEffect(() => {
-        console.log(array);
         const grid_ = array.map(
             (item, index) => {
                 if (item.countries.size === 0 && option ==="language"){
@@ -104,10 +103,6 @@ export const GridOfCountries = ({array, option}) => {
         );
         setGrid(grid_);
     }, [array, option]);
-
-
-
-
 
     return <GridStyled>
         {grid}

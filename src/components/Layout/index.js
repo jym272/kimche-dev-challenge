@@ -67,7 +67,6 @@ const MainStyled = styled.main`
 const Layout = props => {
     const context = useContext(CountryStore)
     const isFrontPage = context.isHomePage;
-    // console.log(isFrontPage)
     const footerHeight = isFrontPage ? "0" : "3rem";
 
 

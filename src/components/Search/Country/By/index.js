@@ -51,16 +51,16 @@ const CountriesByStyled = styled.section`
     z-index: 3;
   }
 
-  .selector__options {
-    font-size: 0.9rem;
-    user-select: none;
-    position: absolute;
-    transform: translateY(69px);
-    top: 0;
-    right: 0;
-    z-index: 3;
-
-  }
+  //.selector__options {
+  //  font-size: 0.9rem;
+  //  user-select: none;
+  //  position: absolute;
+  //  transform: translateY(69px);
+  //  top: 0;
+  //  right: 0;
+  //  z-index: 3;
+  //
+  //}
 `;
 
 
@@ -68,7 +68,6 @@ export const CountriesBy = ({array, country_name, option: option_}) => {
 
     const [country_name_filter, setCountryNameFilter] = useState(country_name);
     const [infoMessage, setInfoMessage] = useState('');
-    const [option, setOption] = useState(option_);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -90,7 +89,7 @@ export const CountriesBy = ({array, country_name, option: option_}) => {
                 break;
         }
         return () => clearTimeout(timer);
-    }, [country_name_filter, navigate]);
+    }, [country_name_filter, navigate,option_]);
 
 
     const submitHandler = (e) => {
@@ -105,18 +104,16 @@ export const CountriesBy = ({array, country_name, option: option_}) => {
             valueInput={country_name_filter}
             onChangeInput={(e) => setCountryNameFilter(e.target.value)}/>
         {!!infoMessage && <div className={"info__message"}>{infoMessage}</div>}
-        <div className={"selector__options"}>
-            <span>Group by:</span>
-            <span onClick={() => {
-                // setOption("continent")
-                navigate(`/search/${country_name_filter}?option=continent`);
-            }}>continent</span>
-            <span onClick={() => {
-                // setOption("language")
-                navigate(`/search/${country_name_filter}?option=language`);
-            }}>language</span>
+        {/*<div className={"selector__options"}>*/}
+        {/*    <span>Group by:</span>*/}
+        {/*    <span onClick={() => {*/}
+        {/*        navigate(`/search/${country_name_filter}?option=continent`);*/}
+        {/*    }}>continent</span>*/}
+        {/*    <span onClick={() => {*/}
+        {/*        navigate(`/search/${country_name_filter}?option=language`);*/}
+        {/*    }}>language</span>*/}
 
-        </div>
+        {/*</div>*/}
         <GridOfCountries array={array} option={option_}/>
 
     </CountriesByStyled>
