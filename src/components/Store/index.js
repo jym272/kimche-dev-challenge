@@ -78,6 +78,15 @@ export const StoreProvider = ({children}) => {
 
     }, [data]);
 
+    const orderByName = (languages_)=>{
+        const languages_array = Array.from(languages_.values());
+        languages_array.sort((a,b)=>{
+            if(a.name < b.name) return -1;
+            if(a.name > b.name) return 1;
+            return 0;
+        })
+        return languages_array;
+    }
 
     const languagesCountriesIncludes = (inputCountryName) => {
         const languages_ = [];
@@ -94,7 +103,7 @@ export const StoreProvider = ({children}) => {
             })
             languages_.push(languageObject)
         }
-        return languages_;
+        return orderByName(languages_);
     }
 
     const continentsCountriesIncludes = (inputCountryName) => {
