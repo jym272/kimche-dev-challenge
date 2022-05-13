@@ -1,15 +1,16 @@
 import {ListOfCountries} from "../Countries";
 import styled from "styled-components";
 import {useEffect, useState} from "react";
+import {ListStyled} from "../UI";
 
 
 const NotFoundStyled = styled.section`
-  display: flex;
+  display: block;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
   height: 100%;
-  //background-color: #f5f5f5;
+  min-height: 70vh;
+  transform: scale(0.7);
 `;
 
 const GridStyled = styled.section`
@@ -117,11 +118,10 @@ export const GridOfCountries = ({array, option}) => {
 
     return <>
         {option === "language" && grid.length === 0 ?
-         <NotFoundStyled>No countries found</NotFoundStyled> :
-         <GridStyled>
-             {grid}
-         </GridStyled>
-        }
+         <NotFoundStyled>
+             <ListStyled>
+                 {<img src={"/empty_folder.png"} alt="emptyFolder"/>}
+             </ListStyled>
+         </NotFoundStyled> : <GridStyled>{grid}</GridStyled>}
     </>
-
 }
