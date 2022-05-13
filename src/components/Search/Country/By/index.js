@@ -46,17 +46,29 @@ const CountriesByStyled = styled.section`
     padding: 0 0 0 20px;
     color: ${({theme}) => theme.colors.orange_bar};
     position: absolute;
-    transform: translateY(70px);
+    transform: translateY(69px);
     top: 0;
     z-index: 3;
+  }
+
+  .selector__options {
+    font-size: 0.9rem;
+    user-select: none;
+    position: absolute;
+    transform: translateY(69px);
+    top: 0;
+    right: 0;
+    z-index: 3;
+
   }
 `;
 
 
-export const CountriesBy = ({array, country_name, option}) => {
+export const CountriesBy = ({array, country_name, option: option_}) => {
 
     const [country_name_filter, setCountryNameFilter] = useState(country_name);
     const [infoMessage, setInfoMessage] = useState('');
+    const [option, setOption] = useState(option_);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -74,7 +86,7 @@ export const CountriesBy = ({array, country_name, option}) => {
                 }, 600);
                 break;
             default:
-                navigate(`/search/${country_name_filter}?option=${option}`);
+                navigate(`/search/${country_name_filter}?option=${option_}`);
                 break;
         }
         return () => clearTimeout(timer);
@@ -93,7 +105,19 @@ export const CountriesBy = ({array, country_name, option}) => {
             valueInput={country_name_filter}
             onChangeInput={(e) => setCountryNameFilter(e.target.value)}/>
         {!!infoMessage && <div className={"info__message"}>{infoMessage}</div>}
-        <GridOfCountries array={array} option={option}/>
+        <div className={"selector__options"}>
+            <span>Group by:</span>
+            <span onClick={() => {
+                // setOption("continent")
+                navigate(`/search/${country_name_filter}?option=continent`);
+            }}>continent</span>
+            <span onClick={() => {
+                // setOption("language")
+                navigate(`/search/${country_name_filter}?option=language`);
+            }}>language</span>
+
+        </div>
+        <GridOfCountries array={array} option={option_}/>
 
     </CountriesByStyled>
 }

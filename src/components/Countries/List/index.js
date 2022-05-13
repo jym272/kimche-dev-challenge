@@ -74,19 +74,9 @@ const ListStyled = styled.ul`
 
 //gonna go crazy
 export const ListOfCountries = ({map}) => {
-    const [countryArray, setCountryArray] = useState([]);
     const [list, setList] = useState([]);
 
     const navigate = useNavigate();
-
-    //
-    // useEffect(() => {
-    //     setCountryArray([])
-    //     for (const [key, value] of map) {
-    //         setCountryArray(prev => [...prev, {key, value}])
-    //     }
-    // }, [map])
-
     const countryHandler = useCallback((key) => {
         navigate(`/country/${key}`)
     }, [navigate])
@@ -113,27 +103,8 @@ export const ListOfCountries = ({map}) => {
         })
     }, [map, countryHandler])
 
-
-
-
-    // const list = countryArray.map(({key, value}) => {
-    //     return (
-    //         <li key={key} onClick={countryHandler.bind(this,key)}>
-    //             <Link to={`/country/${key}`}>
-    //                 <div>
-    //                     <span>{value.emoji}</span>
-    //                     <span>{value.name}</span>
-    //                 </div>
-    //             </Link>
-    //         </li>
-    //     )
-    //
-    // });
-
-
     return (
         <ListStyled>
-            {/*{list}*/}
             {list.length ? list: <img  src={"/empty_folder.png"} alt="emptyFolder" />  }
         </ListStyled>
     )

@@ -1,5 +1,6 @@
 import {ListOfCountries} from "../Countries";
 import styled from "styled-components";
+import {useEffect, useState} from "react";
 
 
 const GridStyled = styled.section`
@@ -84,19 +85,28 @@ const GridStyled = styled.section`
 
 
 export const GridOfCountries = ({array, option}) => {
-    const grid = array.map(
-        (item, index) => {
-            if (item.countries.size === 0 && option ==="language"){
-                return null;
-            }else
-            return (
-                <div key={index} className="grid-item">
-                    <h1>{item.name}</h1>
-                    <ListOfCountries map={item.countries}/>
-                </div>
-            );
-        }
-    );
+    const [grid, setGrid] = useState([]);
+
+    useEffect(() => {
+        console.log(array);
+        const grid_ = array.map(
+            (item, index) => {
+                if (item.countries.size === 0 && option ==="language"){
+                    return null;
+                }else
+                    return (
+                        <div key={index} className="grid-item">
+                            <h1>{item.name}</h1>
+                            <ListOfCountries map={item.countries}/>
+                        </div>
+                    );
+            }
+        );
+        setGrid(grid_);
+    }, [array, option]);
+
+
+
 
 
     return <GridStyled>
