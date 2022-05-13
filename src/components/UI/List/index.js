@@ -26,11 +26,7 @@ export const ListStyled = styled.ul`
     
   }
 
-  a {
-    text-decoration: none;
-    color: azure;
-  }
-
+ 
   li {
     background-color: rgba(0, 0, 0, 0.17);
     cursor: pointer;

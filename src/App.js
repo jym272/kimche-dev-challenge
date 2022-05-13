@@ -2,7 +2,14 @@ import {ThemeProvider} from 'styled-components'
 import {DarkTheme, GlobalStyle, LightTheme} from "./themes";
 import {useState} from "react";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import {About, Home, NotFound, Search, SearchCountryComponent} from "./components";
+import {
+    About,
+    Country,
+    Home,
+    NotFound,
+    Search,
+    SearchCountryComponent
+} from "./components";
 
 
 function App() {
@@ -56,7 +63,7 @@ function App() {
                         {/*<Route path="comments" element={<Comments/>}/>*/}
                     </Route>
 
-                    {/*<Route path="new-quote" element={<NewQuote/>}/>*/}
+                    <Route path="country/:country_id" element={<Country/>}/>
                 </Route>
                 <Route
                     path="*"

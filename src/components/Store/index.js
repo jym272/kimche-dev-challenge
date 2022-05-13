@@ -30,6 +30,25 @@ const getContinents = gql`
 `;
 
 
+// query Country($code: ID!) {
+//     country(code: $code) {
+//         name
+//         native
+//         phone
+//         capital
+//         currency
+//         languages {
+//             name
+//             native
+//         }
+//         states {
+//             name
+//         }
+//         emoji
+//     }
+// }
+
+
 export const StoreProvider = ({children}) => {
     const [continents, setContinents] = useState([]);
     const [languages, setLanguages] = useState(new Map());

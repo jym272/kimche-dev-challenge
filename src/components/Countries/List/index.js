@@ -1,5 +1,4 @@
-import {Link, useNavigate} from "react-router-dom";
-import styled from "styled-components";
+import {useNavigate} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 import {ListStyled} from "../../UI";
 
@@ -16,13 +15,11 @@ export const ListOfCountries = ({map}) => {
         setList([])
         const createItemList = (key, value) => {
             return (
-                <li key={key} onClick={countryHandler.bind(this,key)}>
-                    <Link to={`/country/${key}`}>
-                        <div>
-                            <span>{value.emoji}</span>
-                            <span>{value.name}</span>
-                        </div>
-                    </Link>
+                <li key={key} onClick={countryHandler.bind(this, key)}>
+                    <div>
+                        <span>{value.emoji}</span>
+                        <span>{value.name}</span>
+                    </div>
                 </li>
             )
 
@@ -36,7 +33,8 @@ export const ListOfCountries = ({map}) => {
 
     return (
         <ListStyled>
-            {list.length ? list: <img  src={"/empty_folder.png"} alt="emptyFolder" />  }
+            {list.length ? list :
+             <img src={"/empty_folder.png"} alt="emptyFolder"/>}
         </ListStyled>
     )
 }
