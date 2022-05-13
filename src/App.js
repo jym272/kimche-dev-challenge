@@ -6,7 +6,7 @@ import {About, Home, NotFound, Search, SearchCountryComponent} from "./component
 
 
 function App() {
-    const themes = [LightTheme, DarkTheme];
+    const themes = [DarkTheme, LightTheme];
     const darkMode = localStorage.getItem("darkMode");
     let index = 0;
     if (darkMode) {
