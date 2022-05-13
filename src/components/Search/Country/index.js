@@ -1,2 +1,2 @@
 export * from './SearchCountry';
-export * from './ByContinent'
+export * from './By'

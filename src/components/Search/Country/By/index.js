@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import {SearchCountry} from "../../../UI";
 import {GridOfCountries} from "../../../Grid";
 
-const CountriesByContinentsStyled = styled.section`
+const CountriesByStyled = styled.section`
   display: flex;
   //align-self: center;
   flex-direction: column;
@@ -53,7 +53,7 @@ const CountriesByContinentsStyled = styled.section`
 `;
 
 
-export const CountriesByContinents = ({continents, country_name}) => {
+export const CountriesBy = ({array, country_name, option}) => {
 
     const [country_name_filter, setCountryNameFilter] = useState(country_name);
     const [infoMessage, setInfoMessage] = useState('');
@@ -74,20 +74,26 @@ export const CountriesByContinents = ({continents, country_name}) => {
                 }, 600);
                 break;
             default:
-                navigate(`/search/${country_name_filter}?option=continent`);
+                navigate(`/search/${country_name_filter}?option=${option}`);
                 break;
         }
         return () => clearTimeout(timer);
     }, [country_name_filter, navigate]);
 
-    return <CountriesByContinentsStyled searching={!!country_name_filter}>
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+    };
+
+    return <CountriesByStyled searching={!!country_name_filter}>
         <SearchCountry
+            Handler={submitHandler}
             placeholder={"Returning home..."}
             className={"input"}
             valueInput={country_name_filter}
             onChangeInput={(e) => setCountryNameFilter(e.target.value)}/>
         {!!infoMessage && <div className={"info__message"}>{infoMessage}</div>}
-        <GridOfCountries array={continents}/>
+        <GridOfCountries array={array} option={option}/>
 
-    </CountriesByContinentsStyled>
+    </CountriesByStyled>
 }

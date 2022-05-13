@@ -4,8 +4,9 @@ import {gql, useQuery} from "@apollo/client";
 const defaultValue = {
     continents: [],
     isHomePage: false,
-    setHomePage:(option)=>{},
-    continentsCountriesIncludes:(inputCountryName)=>{}
+    setHomePage: (option) => {},
+    continentsCountriesIncludes: (inputCountryName) => {},
+    languagesCountriesIncludes: (inputCountryName) => {}
 };
 
 export const CountryStore = createContext(defaultValue);
@@ -19,7 +20,10 @@ const getContinents = gql`
                 name
                 code
                 emoji
-                emojiU
+                languages {
+                    code
+                    name
+                }
             }
         }
     }
@@ -28,34 +32,70 @@ const getContinents = gql`
 
 export const StoreProvider = ({children}) => {
     const [continents, setContinents] = useState([]);
+    const [languages, setLanguages] = useState(new Map());
     const [isHomePage, setIsHomePage] = useState(false);
     const {loading, error, data} = useQuery(getContinents);
 
 
     useEffect(() => {
         if (data) {
+            const languages_ = new Map();
             data.continents.forEach(continent => {
                 const continentObject = {
                     name: continent.name,
                     countries: new Map()
                 }
                 continent.countries.forEach(country => {
-                    const countryObject ={
+                    const countryObject = {
                         name: country.name,
-                        // code: country.code,
                         emoji: country.emoji,
-                        emojiU: country.emojiU
+                        code: country.code,
                     }
                     continentObject.countries.set(country.code, countryObject)
+                    //languages setting
+                    country.languages.forEach(language => {
+                        if (!languages_.has(language.code)) {
+                            const languageObject = {
+                                name: language.name,
+                                countries: new Set()
+                            }
+                            languageObject.countries.add(countryObject)
+                            languages_.set(language.code, languageObject)
+                        } else {
+                            languages_.get(language.code).countries
+                                      .add(countryObject)
+                        }
+                    })
+
+
                 })
                 setContinents(
                     prevContinents => [...prevContinents, continentObject])
 
             });
+            setLanguages(languages_);
         }
 
     }, [data]);
 
+
+    const languagesCountriesIncludes = (inputCountryName) => {
+        const languages_ = [];
+        const input = inputCountryName.toLowerCase();
+        for (const [code, value] of languages) {
+            const languageObject = {
+                name: value.name,
+                countries: new Map()
+            }
+            value.countries.forEach(country => {
+                if (country.name.toLowerCase().includes(input)) {
+                    languageObject.countries.set(country.code, country)
+                }
+            })
+            languages_.push(languageObject)
+        }
+        return languages_;
+    }
 
     const continentsCountriesIncludes = (inputCountryName) => {
         const continents_ = [];
@@ -75,7 +115,7 @@ export const StoreProvider = ({children}) => {
         return continents_
     }
 
-    const setHomePage=(option)=>{
+    const setHomePage = (option) => {
         setIsHomePage(option)
     }
 
@@ -86,6 +126,7 @@ export const StoreProvider = ({children}) => {
         <CountryStore.Provider value={{
             continents,
             continentsCountriesIncludes,
+            languagesCountriesIncludes,
             isHomePage,
             setHomePage,
         }}>

@@ -28,7 +28,7 @@ const GridStyled = styled.section`
     background-color: #303340;
     border-radius: 15px;
     border: 1px solid #303340;
-    //overflow: hidden;
+    overflow: hidden;
     &::before,
     &::after {
       content: '';
@@ -53,8 +53,6 @@ const GridStyled = styled.section`
       border-left: 0.1em solid #ffffeb;
       border-right: 0.1em solid #ffffeb;
       transform: scale3d(1,0,1);
-
-
     }
 
     &:hover::before,
@@ -81,22 +79,16 @@ const GridStyled = styled.section`
       margin: 0 auto;
       padding: 20px 20px;
     }
-
-    &:hover {
-      //background-color: hsla(228, 14%, 21%, 1.0);
-      //box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-
-
   }
 `;
 
 
-export const GridOfCountries = ({array}) => {
-    // console.log(array);
-
+export const GridOfCountries = ({array, option}) => {
     const grid = array.map(
         (item, index) => {
+            if (item.countries.size === 0 && option ==="language"){
+                return null;
+            }else
             return (
                 <div key={index} className="grid-item">
                     <h1>{item.name}</h1>

@@ -1,8 +1,8 @@
 import {Outlet, useLocation, useParams} from "react-router-dom";
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import {CountryStore} from "../../Store";
 import {NotFound} from "../../NotFound";
-import {CountriesByContinents} from "./ByContinent";
+import {CountriesBy} from "./By";
 
 
 export const SearchCountryComponent = () => {
@@ -13,36 +13,38 @@ export const SearchCountryComponent = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const option = queryParams.get('option');
+    const [countriesArray, setCountriesArray] = useState([]);
+    const [incorrectOption, setIncorrectOption] = useState(false);
 
 
-    useEffect(()=>{
+    useEffect(() => {
         context.setHomePage(false)
-    },[context]) //first update store provider, then render this component
 
+        let country = country_name
+        if (country_name.length < 2) {
+            country = "YolandaLoyola" //continents is empty now
+        }
 
-
-
-    // console.log(country_name, option)
-
-    let country = country_name
-    if (country_name.length < 2) {
-        country = "YolandaLoyola" //continents is empty now
-    }
-
-    switch (option) {
-        case "continent":
-            return <CountriesByContinents
-                continents={context.continentsCountriesIncludes(country)}
-                country_name={country_name}
-            />
-        case "country":
-            break;
-        default:
-            return <NotFound/>
-    }
+        switch (option) {
+            case 'continent':
+                setCountriesArray(context.continentsCountriesIncludes(country))
+                break;
+            case 'language':
+                setCountriesArray(context.languagesCountriesIncludes(country))
+                break;
+            default:
+                setIncorrectOption(true)
+        }
+    }, [context, country_name, option]) //first update store provider, then
 
     return <>
-        SearchCountry
+        {incorrectOption ? <NotFound/> :
+         <CountriesBy
+             option={option}
+             array={countriesArray}
+             country_name={country_name}
+         />
+        }
         <Outlet/>
     </>
 

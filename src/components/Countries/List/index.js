@@ -1,6 +1,6 @@
 import {Link, useNavigate} from "react-router-dom";
 import styled from "styled-components";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 const ListStyled = styled.ul`
   display: flex;
@@ -9,6 +9,24 @@ const ListStyled = styled.ul`
   list-style: none;
   padding: 0 20px 20px 20px;
   margin: 0;
+  
+  
+  img{
+    user-select: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    max-width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    z-index: 21;
+    transition: transform 0.25s ease-in-out;
+    &:hover{
+      transform: rotate3d(1,1,1,-10deg) scale(1.1);
+    }
+    
+  }
 
   a {
     text-decoration: none;
@@ -54,41 +72,69 @@ const ListStyled = styled.ul`
   }
 `;
 
-
+//gonna go crazy
 export const ListOfCountries = ({map}) => {
     const [countryArray, setCountryArray] = useState([]);
+    const [list, setList] = useState([]);
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        setCountryArray([])
-        for (const [key, value] of map) {
-            setCountryArray(prev => [...prev, {key, value}])
-        }
-    }, [map])
+    //
+    // useEffect(() => {
+    //     setCountryArray([])
+    //     for (const [key, value] of map) {
+    //         setCountryArray(prev => [...prev, {key, value}])
+    //     }
+    // }, [map])
 
-
-    const countryHandler =(key) => {
+    const countryHandler = useCallback((key) => {
         navigate(`/country/${key}`)
-    }
+    }, [navigate])
 
-    const list = countryArray.map(({key, value}) => {
-        return (
-            <li key={key} onClick={countryHandler.bind(this,key)}>
-                <Link to={`/country/${key}`}>
-                    <div>
-                        <span>{value.emoji}</span>
-                        <span>{value.name}</span>
-                    </div>
-                </Link>
-            </li>
-        )
+    useEffect(() => {
+        setList([])
+        const createItemList = (key, value) => {
+            return (
+                <li key={key} onClick={countryHandler.bind(this,key)}>
+                    <Link to={`/country/${key}`}>
+                        <div>
+                            <span>{value.emoji}</span>
+                            <span>{value.name}</span>
+                        </div>
+                    </Link>
+                </li>
+            )
 
-    });
+        };
+
+        map.forEach((value, key) => {
+            const itemList = createItemList(key, value)
+            setList(prev => [...prev, itemList])
+        })
+    }, [map, countryHandler])
+
+
+
+
+    // const list = countryArray.map(({key, value}) => {
+    //     return (
+    //         <li key={key} onClick={countryHandler.bind(this,key)}>
+    //             <Link to={`/country/${key}`}>
+    //                 <div>
+    //                     <span>{value.emoji}</span>
+    //                     <span>{value.name}</span>
+    //                 </div>
+    //             </Link>
+    //         </li>
+    //     )
+    //
+    // });
+
 
     return (
         <ListStyled>
-            {list}
+            {/*{list}*/}
+            {list.length ? list: <img  src={"/empty_folder.png"} alt="emptyFolder" />  }
         </ListStyled>
     )
 }
