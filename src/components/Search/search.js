@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {LogoStyled, SearchCountry} from "../UI";
 import {AboutFooter} from "../About";
 import {CountryStore} from "../Store";
+import React from "react";
 
 const SearchStyled = styled.section`
   display: flex;
@@ -109,7 +110,7 @@ const OptionsSearch = styled.div`
 `;
 
 
-export const Search = () => {
+export const Search_ = () => {
     const [languageOption, setLanguageOption] = useState(false);
     const [optionAnimationStyle, setOptionAnimationStyle] = useState(
         "select__line__init");
@@ -196,4 +197,4 @@ export const Search = () => {
     </SearchStyled>
 
 }
-
+export const Search = React.memo(Search_);

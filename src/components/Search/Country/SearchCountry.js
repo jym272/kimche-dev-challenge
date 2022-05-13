@@ -1,11 +1,11 @@
 import {Outlet, useLocation, useNavigate, useParams} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {CountryStore} from "../../Store";
 import {NotFound} from "../../NotFound";
 import {CountriesBy} from "./By";
 
 
-export const SearchCountryComponent = () => {
+export const SearchCountryComponent_ = () => {
 
     const context = useContext(CountryStore)
     const params = useParams();
@@ -15,7 +15,7 @@ export const SearchCountryComponent = () => {
     const option = queryParams.get('option');
     const [countriesArray, setCountriesArray] = useState([]);
     const [incorrectOption, setIncorrectOption] = useState(false);
-    const navigate= useNavigate();
+    const navigate = useNavigate();
 
 
     document.onkeydown = (e) => {
@@ -58,3 +58,5 @@ export const SearchCountryComponent = () => {
     </>
 
 }
+
+export const SearchCountryComponent = React.memo(SearchCountryComponent_);

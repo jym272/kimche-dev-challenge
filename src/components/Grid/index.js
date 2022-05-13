@@ -2,6 +2,7 @@ import {ListOfCountries} from "../Countries";
 import styled from "styled-components";
 import {useEffect, useState} from "react";
 import {ListStyled} from "../UI";
+import React from "react";
 
 
 const NotFoundStyled = styled.section`
@@ -96,7 +97,7 @@ const GridStyled = styled.section`
 `;
 
 
-export const GridOfCountries = ({array, option}) => {
+export const GridOfCountries_ = ({array, option}) => {
     const [grid, setGrid] = useState([]);
 
     useEffect(() => {
@@ -125,3 +126,5 @@ export const GridOfCountries = ({array, option}) => {
          </NotFoundStyled> : <GridStyled>{grid}</GridStyled>}
     </>
 }
+
+export const GridOfCountries = React.memo(GridOfCountries_);
