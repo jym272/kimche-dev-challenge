@@ -35,7 +35,7 @@ const GridStyled = styled.section`
   .grid-item {
     position: relative;
     color: #ffffeb;
-    width: 99%;
+    width: 98%;
     height: 100%;
     background-color: #303340;
     border-radius: 15px;

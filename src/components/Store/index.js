@@ -30,23 +30,7 @@ const getContinents = gql`
 `;
 
 
-// query Country($code: ID!) {
-//     country(code: $code) {
-//         name
-//         native
-//         phone
-//         capital
-//         currency
-//         languages {
-//             name
-//             native
-//         }
-//         states {
-//             name
-//         }
-//         emoji
-//     }
-// }
+
 
 
 export const StoreProvider = ({children}) => {
@@ -124,6 +108,14 @@ export const StoreProvider = ({children}) => {
         }
         return orderByName(languages_);
     }
+    // const getCountryNameAndCapital =(code)=>{
+    //     console.log(continents)
+    //     const country = continents.find(continent => continent.countries.has(code));
+    //     return {
+    //         name: country.countries.get(code).name,
+    //         capital: country.countries.get(code).capital
+    //     }
+    // }
 
     const continentsCountriesIncludes = (inputCountryName) => {
         const continents_ = [];

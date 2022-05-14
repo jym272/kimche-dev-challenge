@@ -54,7 +54,6 @@ export const SearchCountryComponent_ = () => {
              country_name={country_name}
          />
         }
-        <Outlet/>
     </>
 
 }

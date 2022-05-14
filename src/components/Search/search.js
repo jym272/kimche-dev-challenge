@@ -1,10 +1,9 @@
 import styled from 'styled-components'
-import {useContext, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import React, {useContext, useEffect, useState} from "react";
+import {Outlet, useNavigate} from "react-router-dom";
 import {LogoStyled, SearchCountry} from "../UI";
 import {AboutFooter} from "../About";
 import {CountryStore} from "../Store";
-import React from "react";
 
 const SearchStyled = styled.section`
   display: flex;
@@ -118,9 +117,9 @@ export const Search_ = () => {
     const [invalidInput, setInvalidInput] = useState("");
     const context = useContext(CountryStore);
 
-    useEffect(()=>{
+    useEffect(() => {
         context.setHomePage(true)
-    },[context]) //first update store provider, then render this component
+    }, [context]) //first update store provider, then render this component
 
     let navigate = useNavigate();
 
@@ -149,7 +148,6 @@ export const Search_ = () => {
         navigate(`/search/${input}?option=${!languageOption ? "continent" :
                                             "language"}`);
     }
-
 
 
     document.onkeydown = (e) => {
@@ -194,6 +192,7 @@ export const Search_ = () => {
             {}
         </div>
         <AboutFooter/>
+        <Outlet/>
     </SearchStyled>
 
 }
