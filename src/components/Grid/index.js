@@ -17,7 +17,7 @@ const NotFoundStyled = styled.section`
 const GridStyled = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  grid-gap: 2rem;
+  grid-gap: 1.8rem;
   grid-auto-flow: dense;
   justify-items: center;
   align-items: center;
@@ -35,8 +35,8 @@ const GridStyled = styled.section`
   .grid-item {
     position: relative;
     color: #ffffeb;
-    width: 98%;
-    height: 100%;
+    width: 98%; //correct animation of the borders
+    height: 98%;
     background-color: #303340;
     border-radius: 15px;
     border: 1px solid #303340;
