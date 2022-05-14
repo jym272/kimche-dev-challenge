@@ -190,7 +190,7 @@ export const Country = () => {
 
         const mapElement = document.getElementById('map');
 
-        if (mapElement && google) {
+        if (mapElement && google && gridItems.length >0) {
             let map;
             let infowindow;
 
