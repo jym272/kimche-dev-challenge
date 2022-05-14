@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {Outlet, useNavigate} from "react-router-dom";
 import {LogoStyled, SearchCountry} from "../UI";
 import {AboutFooter} from "../About";
@@ -123,16 +123,16 @@ export const Search_ = () => {
 
     let navigate = useNavigate();
 
-    const languageOptionHandler = () => {
+    const languageOptionHandler = useCallback (() => {
         setLanguageOption(true);
         setOptionAnimationStyle("select__line");
-    }
+    },[])
 
     useEffect(() => {
         setInvalidInput("");
     }, [input]);
 
-    const findCountryHandler = (e) => {
+    const findCountryHandler = useCallback((e) => {
         e.preventDefault()
         // only alphabetic characters are allowed, at least 3 characters and
         // special characters: like "[" and "." are allowed
@@ -147,19 +147,20 @@ export const Search_ = () => {
 
         navigate(`/search/${input}?option=${!languageOption ? "continent" :
                                             "language"}`);
-    }
+    },[input, languageOption, navigate]);
 
 
-    document.onkeydown = (e) => {
-        e = e || window.event;
-        if (e.keyCode === 37) {
-            setLanguageOption(false)
-            // console.log('left arrow pressed')
-        } else if (e.keyCode === 39) {
-            languageOptionHandler()
-            // console.log('right arrow pressed')
+    useEffect(() => {
+        document.onkeydown = (e) => {
+            e = e || window.event;
+            if (e.keyCode === 37) { //left arrow
+                setLanguageOption(false)
+            } else if (e.keyCode === 39) { //right arrow
+                languageOptionHandler()
+            }
         }
-    }
+    }, [languageOptionHandler]);
+
 
     return <SearchStyled searching={!!input}>
         <LogoStyled>

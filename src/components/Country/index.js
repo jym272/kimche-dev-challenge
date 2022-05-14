@@ -1,24 +1,41 @@
 import {CountryStore} from "../Store";
-import {useParams} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useCallback, useContext, useEffect, useState} from "react";
 import styled from "styled-components";
 import {gql, useQuery} from "@apollo/client";
+import {BackButton} from "../UI";
 
 
-const CountryStyled = styled.section`
+const CountryGridStyled = styled.section`
+
+
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  //width: 100%;
-  //height: 100%;
-  height: 100vh;
-  //z-index: -1;
-  //margin: 0 auto;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 76vh;
+  position: relative;
 
-  //background-color: #fafafa;
-  //padding: 20px;
-  //box-sizing: border-box;
+
+  img {
+    max-height: 40vh;
+    object-fit: cover;
+    transition: box-shadow 0.1s, transform 0.1s;
+
+    &:hover {
+      box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.6);
+      //opacity: 0.5;
+      //object-fit: contain;
+    }
+  }
+
+  > * {
+    flex-grow: 1;
+    margin: 0.5rem;
+  }
 `;
 
 
@@ -27,20 +44,25 @@ const queryCountry = gql`
         country(code: $id) {
             name
             capital
+            states {
+                name
+            }
         }
     }
 `;
 
-const getAttrId = (string) =>{
+const getAttrId = (string) => {
     const regex = /(https:\/\/maps\.google\.com\/maps\/contrib\/)([0-9]+)/g;
     const match = regex.exec(string)
     return match[2]
 }
 
 
-
 export const Country = () => {
-
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const option = queryParams.get('option');
+    const lookup = queryParams.get('lookup');
     const {loading, error, data} = useQuery(queryCountry, {
         variables: {
             id: useParams().country_id
@@ -48,8 +70,10 @@ export const Country = () => {
     });
 
     const [photosArray, setPhotosArray] = useState([]);
+    const [gridItems, setGridItems] = useState([]);
+
     const context = useContext(CountryStore)
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -103,19 +127,19 @@ export const Country = () => {
         };
 
 
-
         if (google && data) {
+            console.log(data)
             const query = `${data.country.capital}, ${data.country.name}`;
 
             getPlaceID(query).then(place_id => {
                 getPhotos(place_id).then(photos => {
-                    // setPhotosArray([])
                     const photos_ = []
-                    console.log(photos.length)
-                    for (let i = 0; i < 5; i++) {
-                        const url_attr =photos[i].html_attributions
+                    const max = photos.length > 6 ? 6 : photos.length;
+                    for (let i = 0; i < max; i++) {
+                        const url_attr = photos[i].html_attributions
                         const photoObject = {
-                            photo: photos[i].getUrl({maxWidth: 600, maxHeight: 600}),
+                            photo: photos[i].getUrl(
+                                {maxWidth: 800, maxHeight: 600}),
                             attr: getAttrId(url_attr[0])
                         }
                         photos_.push(photoObject)
@@ -146,22 +170,43 @@ export const Country = () => {
 
     useEffect(() => {
         context.setHomePage(false)
+    }, [context])
 
-    }, [context, data])
+
+    const constructGrid = useCallback((photosArray) => {
+        const grid = []
+        const map = <div>MAPA</div>
+        grid.push(map)
+        photosArray.forEach((value, index) => {
+            grid.push(<img key={index} src={value.photo} alt=""/>)
+        })
+        return grid
+
+    }, [])
 
 
-    if (loading) return <p>Loading...</p>;
+    useEffect(() => {
+        if (photosArray.length > 0) {
+            const grid = constructGrid(photosArray);
+            setGridItems(grid)
+        }
+    }, [photosArray, constructGrid])
+
+    if (loading || photosArray.length === 0) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
-    return (
-        <CountryStyled>
-            <h1>Country</h1>
-            {photosArray.length>0 &&  <img src={photosArray[0].photo} alt="emptyFolder"/>}
-            {photosArray.length>0 &&  <img src={photosArray[1].photo} alt="emptyFolder"/>}
-            {photosArray.length>0 &&  <img src={photosArray[2].photo} alt="emptyFolder"/>}
-            {photosArray.length>0 &&  <img src={photosArray[3].photo} alt="emptyFolder"/>}
 
-            {photosArray.length>0 &&  <a target="_blank" rel="noopener noreferrer" href={`https://maps.google.com/maps/contrib/${photosArray[0].attr}`} >Jimmy Lin</a>}
 
-        </CountryStyled>
+    return (<>
+            <BackButton onClick={() => {
+                navigate(`/search/${lookup}?option=${option}`)
+            }}/>
+            <CountryGridStyled>
+                {gridItems}
+                {/*{AllPictures}*/}
+                {/*{photosArray.length>0 &&  <a target="_blank" rel="noopener noreferrer" href={`https://maps.google.com/maps/contrib/${photosArray[0].attr}`} >Jimmy Lin</a>}*/}
+
+            </CountryGridStyled>
+        </>
     )
 }
+

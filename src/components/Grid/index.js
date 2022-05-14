@@ -97,7 +97,7 @@ const GridStyled = styled.section`
 `;
 
 
-export const GridOfCountries_ = ({array, option}) => {
+export const GridOfCountries_ = ({array, option, country_name}) => {
     const [grid, setGrid] = useState([]);
 
     useEffect(() => {
@@ -108,7 +108,7 @@ export const GridOfCountries_ = ({array, option}) => {
                     grid__.push(
                         <div key={index} className="grid-item">
                             <h1>{item.name}</h1>
-                            <ListOfCountries map={item.countries}/>
+                            <ListOfCountries country_name={country_name} option={option} map={item.countries}/>
                         </div>
                     );
                 }

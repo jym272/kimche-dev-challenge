@@ -117,7 +117,7 @@ const CountriesByStyled = styled.section`
         {/*    }}>language</span>*/}
 
         {/*</div>*/}
-        <GridOfCountries array={array_} option={option_}/>
+        <GridOfCountries array={array_} option={option_} country_name={country_name_filter}/>
 
     </CountriesByStyled>
 }

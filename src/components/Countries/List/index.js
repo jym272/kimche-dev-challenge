@@ -3,13 +3,13 @@ import {useCallback, useEffect, useState} from "react";
 import {ListStyled} from "../../UI";
 
 //gonna go crazy
-export const ListOfCountries = ({map}) => {
+export const ListOfCountries = ({map, country_name,option}) => {
     const [list, setList] = useState([]);
 
     const navigate = useNavigate();
     const countryHandler = useCallback((key) => {
-        navigate(`/country/${key}`)
-    }, [navigate])
+        navigate(`/country/${key}?option=${option}&lookup=${country_name}`);
+    }, [navigate, country_name, option]);
 
     useEffect(() => {
         setList([])

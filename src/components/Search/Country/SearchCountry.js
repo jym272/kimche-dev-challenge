@@ -1,4 +1,4 @@
-import {Outlet, useLocation, useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import React, {useContext, useEffect, useState} from "react";
 import {CountryStore} from "../../Store";
 import {NotFound} from "../../NotFound";
@@ -18,12 +18,15 @@ export const SearchCountryComponent_ = () => {
     const navigate = useNavigate();
 
 
-    document.onkeydown = (e) => {
-        e = e || window.event;
-        if (e.key === "Escape") {
-            navigate('/');
+    useEffect(() => {
+
+        document.onkeydown = (e) => {
+            e = e || window.event;
+            if (e.key === "Escape") {
+                navigate('/');
+            }
         }
-    }
+    }, [navigate])
 
 
     useEffect(() => {
