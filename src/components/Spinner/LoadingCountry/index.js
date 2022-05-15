@@ -6,7 +6,7 @@ const ContainerStyled = styled.div`
   top:45%;
   left:0;
   width:100%;
-  font-size: 100px;
+  font-size: 80px;
 `;
 const LoadingSpinnerStyled = styled.div`
   display: block;
