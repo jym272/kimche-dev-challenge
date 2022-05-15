@@ -38,7 +38,7 @@ const GridStyled = styled.section`
     height: 98%;
     background: ${({theme}) => theme.UI.grid_card.background};
     border-radius: 15px;
-    border: 1px solid rgba(213, 204, 204, 0.93);
+    border: ${({theme}) => theme.UI.grid_card.border};
     overflow: hidden;
 
     &::before,

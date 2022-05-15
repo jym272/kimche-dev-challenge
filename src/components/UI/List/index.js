@@ -31,9 +31,10 @@ export const ListStyled = styled.ul`
     background-color: rgba(0, 0, 0, 0.17);
     cursor: pointer;
     border-radius: 15px;
-    padding: 6px;
+    padding: 4px;
     margin-bottom: 0.5rem;
     font-size: 1.1rem;
+    font-family: 'Titillium Web', sans-serif;
     border: 1px solid rgba(0, 0, 0, 0.17);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     z-index: 21;
