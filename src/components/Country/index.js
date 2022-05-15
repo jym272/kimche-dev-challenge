@@ -4,6 +4,7 @@ import {useCallback, useContext, useEffect, useMemo, useState} from "react";
 import styled from "styled-components";
 import {gql, useQuery} from "@apollo/client";
 import {BackButton} from "../UI";
+import {LoadingCountry} from "../Spinner";
 
 
 const CountryGridStyled = styled.section`
@@ -256,7 +257,7 @@ export const Country = () => {
     }, [lookup, option, navigate])
 
 
-    if (loading || gridItems.length === 0) return <p>Loading...</p>;
+    if (loading || gridItems.length === 0) return <LoadingCountry/>;
     if (error) return <p>Error :(</p>;
 
 
