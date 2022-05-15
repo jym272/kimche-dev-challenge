@@ -62,11 +62,11 @@ const queryCountry = gql`
     }
 `;
 
-// const getAttrId = (string) => {
-//     const regex = /(https:\/\/maps\.google\.com\/maps\/contrib\/)([0-9]+)/g;
-//     const match = regex.exec(string)
-//     return match[2]
-// }
+const getAttrId = (string) => {
+    const regex = /(https:\/\/maps\.google\.com\/maps\/contrib\/)([0-9]+)/g;
+    const match = regex.exec(string)
+    return match[2]
+}
 
 
 export const Country = () => {
@@ -146,11 +146,11 @@ export const Country = () => {
                     const photos_ = []
                     const max = photos.length > 6 ? 6 : photos.length;
                     for (let i = 0; i < max; i++) {
-                        // const url_attr = photos[i].html_attributions
+                        const url_attr = photos[i].html_attributions
                         const photoObject = {
                             photo: photos[i].getUrl(
                                 {maxWidth: 800, maxHeight: 600}),
-                            // attr: getAttrId(url_attr[0])
+                            attr: url_attr[0] || `${data.country.name}` //getAttrId(url_attr[0])
                         }
                         photos_.push(photoObject)
                     }
@@ -172,7 +172,7 @@ export const Country = () => {
         photosArray.forEach((value, index) => {
             grid.push(<img className={"photos__"} key={index}
                            src={value.photo}
-                           alt=""/>)
+                           alt={value.attr}/>)
         })
         return grid
 
@@ -190,7 +190,7 @@ export const Country = () => {
 
         const mapElement = document.getElementById('map');
 
-        if (mapElement && google) {
+        if (mapElement && google && gridItems.length >0) {
             let map;
             let infowindow;
 
@@ -244,6 +244,16 @@ export const Country = () => {
             initMap();
         }
     }, [gridItems, google, place, data]) //gridItems must be full to run initMap
+
+
+    useEffect(() => {
+        document.onkeydown = (e) => {
+            e = e || window.event;
+            if (e.keyCode === 37 && lookup && option) { //left arrow
+                navigate(`/search/${lookup}?option=${option}`)
+            }
+        }
+    }, [lookup, option, navigate])
 
 
     if (loading || gridItems.length === 0) return <p>Loading...</p>;
