@@ -246,6 +246,16 @@ export const Country = () => {
     }, [gridItems, google, place, data]) //gridItems must be full to run initMap
 
 
+    useEffect(() => {
+        document.onkeydown = (e) => {
+            e = e || window.event;
+            if (e.keyCode === 37 && lookup && option) { //left arrow
+                navigate(`/search/${lookup}?option=${option}`)
+            }
+        }
+    }, [lookup, option, navigate])
+
+
     if (loading || gridItems.length === 0) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
