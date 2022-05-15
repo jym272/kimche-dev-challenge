@@ -36,6 +36,7 @@ function App() {
         colors: actualTheme.colors,
         invertTheme: invertTheme,
         body: actualTheme.body,
+        UI: actualTheme.UI,
     }}>
         <GlobalStyle/>
         <BrowserRouter>

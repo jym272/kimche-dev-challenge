@@ -1,8 +1,9 @@
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import styled from 'styled-components'
 import {SearchCountry} from "../../../UI";
 import {GridOfCountries} from "../../../Grid";
+import React from "react";
 
 const CountriesByStyled = styled.section`
   display: flex;
@@ -63,8 +64,7 @@ const CountriesByStyled = styled.section`
   //}
 `;
 
-
-export const CountriesBy = ({array, country_name, option: option_}) => {
+ export const CountriesBy_ = ({array, country_name, option: option_}) => {
 
     const [country_name_filter, setCountryNameFilter] = useState(country_name);
     const [infoMessage, setInfoMessage] = useState('');
@@ -96,6 +96,9 @@ export const CountriesBy = ({array, country_name, option: option_}) => {
         e.preventDefault();
     };
 
+
+    const array_ = useMemo(() => array, [array]);
+
     return <CountriesByStyled searching={!!country_name_filter}>
         <SearchCountry
             Handler={submitHandler}
@@ -114,7 +117,9 @@ export const CountriesBy = ({array, country_name, option: option_}) => {
         {/*    }}>language</span>*/}
 
         {/*</div>*/}
-        <GridOfCountries array={array} option={option_}/>
+        <GridOfCountries array={array_} option={option_} country_name={country_name_filter}/>
 
     </CountriesByStyled>
 }
+
+export const CountriesBy = React.memo(CountriesBy_);

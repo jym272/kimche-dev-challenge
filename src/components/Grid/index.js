@@ -2,6 +2,7 @@ import {ListOfCountries} from "../Countries";
 import styled from "styled-components";
 import {useEffect, useState} from "react";
 import {ListStyled} from "../UI";
+import React from "react";
 
 
 const NotFoundStyled = styled.section`
@@ -16,7 +17,7 @@ const NotFoundStyled = styled.section`
 const GridStyled = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  grid-gap: 2rem;
+  grid-gap: 1.8rem;
   grid-auto-flow: dense;
   justify-items: center;
   align-items: center;
@@ -34,8 +35,8 @@ const GridStyled = styled.section`
   .grid-item {
     position: relative;
     color: #ffffeb;
-    width: 99%;
-    height: 100%;
+    width: 98%; //correct animation of the borders
+    height: 98%;
     background-color: #303340;
     border-radius: 15px;
     border: 1px solid #303340;
@@ -96,7 +97,7 @@ const GridStyled = styled.section`
 `;
 
 
-export const GridOfCountries = ({array, option}) => {
+export const GridOfCountries_ = ({array, option, country_name}) => {
     const [grid, setGrid] = useState([]);
 
     useEffect(() => {
@@ -107,7 +108,7 @@ export const GridOfCountries = ({array, option}) => {
                     grid__.push(
                         <div key={index} className="grid-item">
                             <h1>{item.name}</h1>
-                            <ListOfCountries map={item.countries}/>
+                            <ListOfCountries country_name={country_name} option={option} map={item.countries}/>
                         </div>
                     );
                 }
@@ -125,3 +126,5 @@ export const GridOfCountries = ({array, option}) => {
          </NotFoundStyled> : <GridStyled>{grid}</GridStyled>}
     </>
 }
+
+export const GridOfCountries = React.memo(GridOfCountries_);

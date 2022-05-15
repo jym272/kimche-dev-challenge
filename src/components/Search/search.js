@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import {useContext, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import React, {useCallback, useContext, useEffect, useState} from "react";
+import {Outlet, useNavigate} from "react-router-dom";
 import {LogoStyled, SearchCountry} from "../UI";
 import {AboutFooter} from "../About";
 import {CountryStore} from "../Store";
@@ -109,7 +109,7 @@ const OptionsSearch = styled.div`
 `;
 
 
-export const Search = () => {
+export const Search_ = () => {
     const [languageOption, setLanguageOption] = useState(false);
     const [optionAnimationStyle, setOptionAnimationStyle] = useState(
         "select__line__init");
@@ -117,22 +117,22 @@ export const Search = () => {
     const [invalidInput, setInvalidInput] = useState("");
     const context = useContext(CountryStore);
 
-    useEffect(()=>{
+    useEffect(() => {
         context.setHomePage(true)
-    },[context]) //first update store provider, then render this component
+    }, [context]) //first update store provider, then render this component
 
     let navigate = useNavigate();
 
-    const languageOptionHandler = () => {
+    const languageOptionHandler = useCallback (() => {
         setLanguageOption(true);
         setOptionAnimationStyle("select__line");
-    }
+    },[])
 
     useEffect(() => {
         setInvalidInput("");
     }, [input]);
 
-    const findCountryHandler = (e) => {
+    const findCountryHandler = useCallback((e) => {
         e.preventDefault()
         // only alphabetic characters are allowed, at least 3 characters and
         // special characters: like "[" and "." are allowed
@@ -147,20 +147,20 @@ export const Search = () => {
 
         navigate(`/search/${input}?option=${!languageOption ? "continent" :
                                             "language"}`);
-    }
+    },[input, languageOption, navigate]);
 
 
-
-    document.onkeydown = (e) => {
-        e = e || window.event;
-        if (e.keyCode === 37) {
-            setLanguageOption(false)
-            // console.log('left arrow pressed')
-        } else if (e.keyCode === 39) {
-            languageOptionHandler()
-            // console.log('right arrow pressed')
+    useEffect(() => {
+        document.onkeydown = (e) => {
+            e = e || window.event;
+            if (e.keyCode === 37) { //left arrow
+                setLanguageOption(false)
+            } else if (e.keyCode === 39) { //right arrow
+                languageOptionHandler()
+            }
         }
-    }
+    }, [languageOptionHandler]);
+
 
     return <SearchStyled searching={!!input}>
         <LogoStyled>
@@ -193,7 +193,8 @@ export const Search = () => {
             {}
         </div>
         <AboutFooter/>
+        <Outlet/>
     </SearchStyled>
 
 }
-
+export const Search = React.memo(Search_);

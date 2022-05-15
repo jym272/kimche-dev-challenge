@@ -1,4 +1,3 @@
-
 export const LightTheme = {
     colors:{
         primary: 'white',
@@ -8,5 +7,10 @@ export const LightTheme = {
     body: {
         background: '#e2dada',
         color: '#333',
+    },
+    UI:{
+        navigation__button: {
+            hover: "rgba(163,163,163,0.53)",
+        },
     },
 }

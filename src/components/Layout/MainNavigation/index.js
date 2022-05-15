@@ -25,8 +25,7 @@ const NavigationStyled = styled.nav`
 
     &:hover {
       cursor: pointer;
-      background-color: ${props => props.active ? "rgba(234, 234, 234, 0.3)" :
-                                   "rgba(234, 234, 234, 0.9)"};
+      background-color: ${({theme}) => theme.UI.navigation__button.hover};
       border-radius: 50%;
     }
 
@@ -73,7 +72,7 @@ const MainNavigation = props => {
     const isFrontPage = context.isHomePage;
 
 
-    return <NavigationStyled active={isBlackThemeActive}>
+    return <NavigationStyled>
         <header>
             <OrangeBar/>
             <nav>
