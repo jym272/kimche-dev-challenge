@@ -1,5 +1,6 @@
 import {createContext, useEffect, useState} from "react";
 import {gql, useQuery} from "@apollo/client";
+import {LoadingIntro} from "../Spinner";
 
 const defaultValue = {
     continents: [],
@@ -30,13 +31,10 @@ const getContinents = gql`
 `;
 
 
-
-
-
 export const StoreProvider = ({children}) => {
     const [continents, setContinents] = useState([]);
     const [languages, setLanguages] = useState(new Map());
-    const [isHomePage, setIsHomePage] = useState(false);
+    const [isHomePage, setIsHomePage] = useState(true);
     const {loading, error, data} = useQuery(getContinents);
 
 
@@ -81,11 +79,11 @@ export const StoreProvider = ({children}) => {
 
     }, [data]);
 
-    const orderByName = (languages_)=>{
+    const orderByName = (languages_) => {
         const languages_array = Array.from(languages_.values());
-        languages_array.sort((a,b)=>{
-            if(a.name < b.name) return -1;
-            if(a.name > b.name) return 1;
+        languages_array.sort((a, b) => {
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
             return 0;
         })
         return languages_array;
@@ -110,12 +108,10 @@ export const StoreProvider = ({children}) => {
     }
     // const getCountryNameAndCapital =(code)=>{
     //     console.log(continents)
-    //     const country = continents.find(continent => continent.countries.has(code));
-    //     return {
-    //         name: country.countries.get(code).name,
-    //         capital: country.countries.get(code).capital
-    //     }
-    // }
+    //     const country = continents.find(continent =>
+    // continent.countries.has(code)); return { name:
+    // country.countries.get(code).name, capital:
+    // country.countries.get(code).capital } }
 
     const continentsCountriesIncludes = (inputCountryName) => {
         const continents_ = [];
@@ -138,9 +134,7 @@ export const StoreProvider = ({children}) => {
     const setHomePage = (option) => {
         setIsHomePage(option)
     }
-
-
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <LoadingIntro/>
     if (error) return <p>Error :(</p>;
     return (
         <CountryStore.Provider value={{

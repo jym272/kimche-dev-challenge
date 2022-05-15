@@ -17,11 +17,13 @@ const CountryGridStyled = styled.section`
   height: 100%;
   min-height: 76vh;
   position: relative;
+  justify-content: space-around;
+  
 
 
   .photos__ {
     max-height: 40vh;
-    object-fit: cover;
+    object-fit: cover ;
     transition: box-shadow 0.1s, transform 0.1s;
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.6);
 
@@ -32,8 +34,8 @@ const CountryGridStyled = styled.section`
   }
 
   > * {
-    flex-grow: 1;
-    margin: 0.5rem;
+    //flex-grow: 1;
+    margin: 0.6rem;
   }
 
 
