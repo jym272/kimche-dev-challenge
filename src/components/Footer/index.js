@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const FooterStyled = styled.footer`
-  background-color: #C65834;
+  background-color: rgba(198, 88, 52, 0.71);
   height: 3rem;
   display: flex;
   flex-wrap: wrap;
@@ -11,11 +11,11 @@ const FooterStyled = styled.footer`
   align-items: center;
   text-align: center;
   user-select: none;
-  color: #ffffff;
+  color: white;
   white-space: nowrap; //TODO: fix for mobile site 
   overflow: hidden;
-  
-  
+
+
   span:first-of-type {
     padding-left: 3rem;
     padding-right: 0;
@@ -26,7 +26,7 @@ const FooterStyled = styled.footer`
   }
 
   span {
-    margin:0;
+    margin: 0;
     padding: 0;
     font-weight: 300;
 

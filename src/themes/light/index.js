@@ -12,5 +12,8 @@ export const LightTheme = {
         navigation__button: {
             hover: "rgba(163,163,163,0.53)",
         },
+        grid_card: {
+            background: 'linear-gradient(0deg, #eeee 0%, rgba(213, 204, 204, 0.93) 100%)',
+        },
     },
 }
