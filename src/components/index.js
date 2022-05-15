@@ -8,6 +8,8 @@ export * from './Grid';
 export * from './Countries';
 export * from './Country';
 export * from './Footer';
+export * from './Spinner';
+
 
 
 

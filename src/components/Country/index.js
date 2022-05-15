@@ -4,6 +4,7 @@ import {useCallback, useContext, useEffect, useMemo, useState} from "react";
 import styled from "styled-components";
 import {gql, useQuery} from "@apollo/client";
 import {BackButton} from "../UI";
+import {LoadingCountry} from "../Spinner";
 
 
 const CountryGridStyled = styled.section`
@@ -16,11 +17,13 @@ const CountryGridStyled = styled.section`
   height: 100%;
   min-height: 76vh;
   position: relative;
+  justify-content: space-around;
+  
 
 
   .photos__ {
     max-height: 40vh;
-    object-fit: cover;
+    object-fit: cover ;
     transition: box-shadow 0.1s, transform 0.1s;
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.6);
 
@@ -31,8 +34,8 @@ const CountryGridStyled = styled.section`
   }
 
   > * {
-    flex-grow: 1;
-    margin: 0.5rem;
+    //flex-grow: 1;
+    margin: 0.6rem;
   }
 
 
@@ -45,9 +48,14 @@ const CountryGridStyled = styled.section`
   }
 
   .label__ {
-    font-size: 1.1rem;
+    font-size: 1.0rem;
     font-family: 'Titillium Web', sans-serif;
     color: #000;
+    div:first-of-type {
+      font-weight: bold;
+      font-size: 1.1rem;
+
+    }
   }
 
 `;
@@ -256,7 +264,7 @@ export const Country = () => {
     }, [lookup, option, navigate])
 
 
-    if (loading || gridItems.length === 0) return <p>Loading...</p>;
+    if (loading || gridItems.length === 0) return <LoadingCountry/>;
     if (error) return <p>Error :(</p>;
 
 

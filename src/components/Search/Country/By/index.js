@@ -30,8 +30,8 @@ const CountriesByStyled = styled.section`
     .search__button_svg {
       border-radius: 0 5px 5px 0;
       background: ${props => props.searching ? '#E97C57' : 'white'};
-      cursor: ${props => props.searching ? 'pointer' : 'default'};
-      pointer-events: ${props => props.searching ? 'auto' : 'none'};
+      cursor: default;
+      pointer-events: none;
       color: #e4e0e0;
       padding: 0 0 0 5px;
       border: 1px solid white;
