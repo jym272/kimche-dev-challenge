@@ -9,6 +9,7 @@ export const LogoStyled = styled.div`
   background: #303340;
   margin-bottom: 40px;
   border-radius: 50%;
+  color: #fff;
   //width: 100%;
   //height: 100px;
   span:first-of-type {

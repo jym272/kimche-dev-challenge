@@ -34,12 +34,11 @@ const GridStyled = styled.section`
 
   .grid-item {
     position: relative;
-    color: #ffffeb;
     width: 98%; //correct animation of the borders
     height: 98%;
-    background-color: #303340;
+    background: ${({theme}) => theme.UI.grid_card.background};
     border-radius: 15px;
-    border: 1px solid #303340;
+    border: 1px solid rgba(213, 204, 204, 0.93);
     overflow: hidden;
 
     &::before,

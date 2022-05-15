@@ -7,6 +7,7 @@ import {BackButton} from "../UI";
 import {LoadingCountry} from "../Spinner";
 
 
+
 const CountryGridStyled = styled.section`
   display: flex;
   flex-wrap: wrap;
@@ -35,7 +36,7 @@ const CountryGridStyled = styled.section`
 
   > * {
     //flex-grow: 1;
-    margin: 0.6rem;
+    margin: 0.7rem;
   }
 
 
@@ -50,7 +51,7 @@ const CountryGridStyled = styled.section`
   .label__ {
     font-size: 1.0rem;
     font-family: 'Titillium Web', sans-serif;
-    color: #000;
+    color: #333;
     div:first-of-type {
       font-weight: bold;
       font-size: 1.1rem;
