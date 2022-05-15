@@ -34,8 +34,14 @@ const SearchStyled = styled.section`
       border: 1px solid white;
       margin: 0;
       height: 50px;
-
       align-self: center;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+      &:hover {
+        ${props => props.searching ? 'background: #C65834' : 'white'};
+      }
+
+
     }
   }
 

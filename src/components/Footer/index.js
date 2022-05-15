@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const FooterStyled = styled.footer`
-  background-color: ${props => props.theme.colors.orange_bar};
+  background-color: #C65834;
   height: 3rem;
   display: flex;
   flex-wrap: wrap;
