@@ -72,7 +72,7 @@ const MainNavigation = props => {
     const isFrontPage = context.isHomePage;
 
 
-    return <NavigationStyled>
+    return <NavigationStyled darkTheme={isBlackThemeActive}>
         <header>
             <OrangeBar/>
             <nav>

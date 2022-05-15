@@ -5,27 +5,29 @@ export const AboutFooterStyled = styled.div`
   bottom: 0;
   padding: 26px 23px;
   border-radius: 50%;
-  border: 1px solid #bbb;
+  border: 1px solid #a0a0a0;
 
-  &:hover{
+  &:hover {
     border: 1px solid ${({theme}) => theme.colors.orange_bar};
     cursor: pointer;
 
   }
-  &:hover span{
+
+  &:hover span {
     background-color: ${({theme}) => theme.colors.orange_bar};
 
   }
-  
-  span +span{
+
+  span + span {
     margin-left: 3px;
   }
-  span{
+
+  span {
     height: 6px;
     width: 6px;
-    background-color: #bbb;
+    background-color: #a0a0a0;
     border-radius: 50%;
     display: inline-block;
   }
-    
-  `;
+
+`;
