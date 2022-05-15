@@ -48,9 +48,14 @@ const CountryGridStyled = styled.section`
   }
 
   .label__ {
-    font-size: 1.1rem;
+    font-size: 1.0rem;
     font-family: 'Titillium Web', sans-serif;
     color: #000;
+    div:first-of-type {
+      font-weight: bold;
+      font-size: 1.1rem;
+
+    }
   }
 
 `;
