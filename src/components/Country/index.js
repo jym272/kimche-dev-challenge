@@ -148,6 +148,10 @@ export const Country = () => {
 
     useEffect(() => {
         if (google && data) {
+            if(!data.country){
+               return navigate('/404')
+            }
+
             const query = `${data.country.capital ? data.country.capital :
                              ""}, ${data.country.name}`;
             getPlaceID(query).then(place => {
@@ -168,7 +172,7 @@ export const Country = () => {
 
             });
         }
-    }, [data, google, getPhotos, getPlaceID]);
+    }, [data, google, getPhotos, getPlaceID, navigate]);
 
     useEffect(() => {
         context.setHomePage(false)

@@ -80,7 +80,7 @@ export const Footer = ()=>{
     return <FooterStyled>
         <span>kimchedevchallenge.com - 2022</span>
         <div>
-            <span>design by: Jorge Clavijo </span>
+            <span>written by: Jorge Clavijo </span>
             <svg
                 className={"logo__svg"}
                 xmlns="http://www.w3.org/2000/svg"
