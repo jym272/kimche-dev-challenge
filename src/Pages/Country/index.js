@@ -1,11 +1,11 @@
-import {CountryStore} from "../Store";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useCallback, useContext, useEffect, useMemo, useState} from "react";
 import styled from "styled-components";
 import {gql, useQuery} from "@apollo/client";
-import {BackButton} from "../UI";
-import {LoadingCountry} from "../Spinner";
-
+import {BackButton} from "../../UI";
+import {LoadingCountry} from "../../components";
+import {CountryStore} from "../../Store";
+import {ServerError} from "../500";
 
 
 const CountryGridStyled = styled.section`
@@ -19,12 +19,11 @@ const CountryGridStyled = styled.section`
   min-height: 76vh;
   position: relative;
   justify-content: space-around;
-  
 
 
   .photos__ {
     max-height: 40vh;
-    object-fit: cover ;
+    object-fit: cover;
     transition: box-shadow 0.1s, transform 0.1s;
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.6);
 
@@ -52,6 +51,7 @@ const CountryGridStyled = styled.section`
     font-size: 1.0rem;
     font-family: 'Titillium Web', sans-serif;
     color: #333;
+
     div:first-of-type {
       font-weight: bold;
       font-size: 1.1rem;
@@ -148,8 +148,8 @@ export const Country = () => {
 
     useEffect(() => {
         if (google && data) {
-            if(!data.country){
-               return navigate('/404')
+            if (!data.country) {
+                return navigate('/404')
             }
 
             const query = `${data.country.capital ? data.country.capital :
@@ -203,7 +203,7 @@ export const Country = () => {
 
         const mapElement = document.getElementById('map');
 
-        if (mapElement && google && gridItems.length >0) {
+        if (mapElement && google && gridItems.length > 0) {
             let map;
             let infowindow;
 
@@ -262,7 +262,7 @@ export const Country = () => {
     useEffect(() => {
         document.onkeydown = (e) => {
             e = e || window.event;
-            if (e.keyCode === 37 && lookup && option) { //left arrow
+            if ((e.keyCode === 37 || e.key === "Escape") && lookup && option) { //left arrow
                 navigate(`/search/${lookup}?option=${option}`)
             }
         }
@@ -270,7 +270,7 @@ export const Country = () => {
 
 
     if (loading || gridItems.length === 0) return <LoadingCountry/>;
-    if (error) return <p>Error :(</p>;
+    if (error) return <ServerError/>;
 
 
     return (<>

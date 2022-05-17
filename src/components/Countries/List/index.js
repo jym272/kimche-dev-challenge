@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
-import {ListStyled} from "../../UI";
+import {ListStyled} from "../../../UI";
 
 //gonna go crazy
 export const ListOfCountries = ({map, country_name,option}) => {

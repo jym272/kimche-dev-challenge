@@ -1,8 +1,8 @@
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import React, {useContext, useEffect, useState} from "react";
+import {CountriesBy} from "../../components";
 import {CountryStore} from "../../Store";
-import {NotFound} from "../../NotFound";
-import {CountriesBy} from "./By";
+import {NotFound} from "../404";
 
 
 export const SearchCountryComponent_ = () => {

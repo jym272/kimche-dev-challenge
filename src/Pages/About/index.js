@@ -1,4 +1,13 @@
+import {useContext, useEffect} from "react";
+import {CountryStore} from "../../Store";
+
 export const About = () => {
+
+    const context = useContext(CountryStore);
+
+    useEffect(() => {
+        context.setHomePage(false)
+    }, [context])
 
     return (
         <div className="about">

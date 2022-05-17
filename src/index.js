@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import {ApolloClient, ApolloProvider, InMemoryCache} from "@apollo/client";
 import TYPE_DEFS from "./schema.graphql";
-import {StoreProvider} from "./components";
+import {StoreProvider} from "./Store";
 
 
 const client = new ApolloClient(

@@ -19,6 +19,7 @@ const NotFoundStyled = styled.div`
     justify-content: center;
     width: 100%;
     height: 100%;
+    margin-top: 2rem;
     font-size: 0.9rem;
     position: relative;
     h1 {
@@ -37,8 +38,8 @@ const NotFoundStyled = styled.div`
       justify-content: center;
       //padding: 0.5rem;
       width: 60%;
-      height: 80%;
-      .image__cotainer{
+      height: 100%;
+      .image__container{
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -113,7 +114,7 @@ export const NotFound = () => {
             <div className={"attr"}>
                 <h1 onClick={rickRolledHandler}>not Found, but is ok..</h1>
                 <div>
-                    <div className={"image__cotainer"}>
+                    <div className={"image__container"}>
                         <img ref={refImage} onMouseEnter={addStyleToImgElementHandler} onClick={returnToHomeHandler} src="/notFound.jpg" alt="404"/>
                     </div>
                     <div className={"legend"}>

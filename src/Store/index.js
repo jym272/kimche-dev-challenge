@@ -1,6 +1,7 @@
 import {createContext, useEffect, useState} from "react";
 import {gql, useQuery} from "@apollo/client";
-import {LoadingIntro} from "../Spinner";
+import {LoadingIntro} from "../components";
+import {ServerError} from "../Pages";
 
 const defaultValue = {
     continents: [],
@@ -135,7 +136,7 @@ export const StoreProvider = ({children}) => {
         setIsHomePage(option)
     }
     if (loading) return <LoadingIntro/>
-    if (error) return <p>Error :(</p>;
+    if (error) return <ServerError/>
     return (
         <CountryStore.Provider value={{
             continents,

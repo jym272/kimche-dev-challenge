@@ -1,4 +1,4 @@
-import {AboutFooterStyled} from "../../UI";
+import {AboutFooterStyled} from "../../../UI";
 import {useNavigate} from "react-router-dom";
 
 export const AboutFooter = () => {
@@ -6,8 +6,9 @@ export const AboutFooter = () => {
 
     const aboutHandler = () => {
         // console.log('about');
-        // navigate('/about');
+        return navigate('/about');
     };
+
 
     return <AboutFooterStyled onClick={aboutHandler}>
             <span>

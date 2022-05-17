@@ -4,12 +4,11 @@ import {useState} from "react";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {
     About,
-    Country,
-    Home,
-    NotFound,
+    Country, Home, NotFound,
     Search,
     SearchCountryComponent
-} from "./components";
+} from "./Pages";
+
 
 
 function App() {

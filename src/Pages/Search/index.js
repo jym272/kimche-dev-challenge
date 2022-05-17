@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import {Outlet, useNavigate} from "react-router-dom";
-import {LogoStyled, SearchCountry} from "../UI";
-import {AboutFooter} from "../About";
-import {CountryStore} from "../Store";
+import {LogoStyled, SearchCountry} from "../../UI";
+import {AboutFooter} from "../../components/About";
+import {CountryStore} from "../../Store";
 
 const SearchStyled = styled.section`
   display: flex;

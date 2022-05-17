@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import styled from 'styled-components'
-import {SearchCountry} from "../../../UI";
+import {SearchCountry} from "../../../../UI";
 import {GridOfCountries} from "../../../Grid";
 import React from "react";
 
