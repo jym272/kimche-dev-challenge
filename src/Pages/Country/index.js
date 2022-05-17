@@ -262,9 +262,16 @@ export const Country = () => {
     useEffect(() => {
         document.onkeydown = (e) => {
             e = e || window.event;
-            if ((e.keyCode === 37 || e.key === "Escape") && lookup && option) { //left arrow
-                navigate(`/search/${lookup}?option=${option}`)
+            if (e.keyCode === 37 || e.key === "Escape") { //left arrow
+                if( lookup && option) {
+                    navigate(`/search/${lookup}?option=${option}`)
+                }else{
+                    navigate(`/`)
+                }
             }
+        }
+        return () => {
+            document.onkeydown = null
         }
     }, [lookup, option, navigate])
 

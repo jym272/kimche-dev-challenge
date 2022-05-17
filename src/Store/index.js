@@ -2,13 +2,16 @@ import {createContext, useEffect, useState} from "react";
 import {gql, useQuery} from "@apollo/client";
 import {LoadingIntro} from "../components";
 import {ServerError} from "../Pages";
+import {Trie} from "../Data-Structures";
 
 const defaultValue = {
     continents: [],
     isHomePage: false,
     setHomePage: (option) => {},
     continentsCountriesIncludes: (inputCountryName) => {},
-    languagesCountriesIncludes: (inputCountryName) => {}
+    languagesCountriesIncludes: (inputCountryName) => {},
+    autoComplete: (inputCountryName) => {}
+
 };
 
 export const CountryStore = createContext(defaultValue);
@@ -37,10 +40,12 @@ export const StoreProvider = ({children}) => {
     const [languages, setLanguages] = useState(new Map());
     const [isHomePage, setIsHomePage] = useState(true);
     const {loading, error, data} = useQuery(getContinents);
+    const [trie, setTrie] = useState(null);
 
 
     useEffect(() => {
         if (data) {
+            let trie_ = new Trie();
             const languages_ = new Map();
             data.continents.forEach(continent => {
                 const continentObject = {
@@ -53,7 +58,13 @@ export const StoreProvider = ({children}) => {
                         emoji: country.emoji,
                         code: country.code,
                     }
+
                     continentObject.countries.set(country.code, countryObject)
+
+                    trie_.insert({
+                                    word: country.name.toLowerCase(),
+                                    code: country.code,
+                                })
                     //languages setting
                     country.languages.forEach(language => {
                         if (!languages_.has(language.code)) {
@@ -75,6 +86,7 @@ export const StoreProvider = ({children}) => {
                     prevContinents => [...prevContinents, continentObject])
 
             });
+            setTrie(trie_)
             setLanguages(languages_);
         }
 
@@ -114,6 +126,10 @@ export const StoreProvider = ({children}) => {
     // country.countries.get(code).name, capital:
     // country.countries.get(code).capital } }
 
+    const autoComplete = (inputCountryName)=>{
+        return trie.autoComplete(inputCountryName.toLowerCase());
+    }
+
     const continentsCountriesIncludes = (inputCountryName) => {
         const continents_ = [];
         const input = inputCountryName.toLowerCase();
@@ -144,6 +160,7 @@ export const StoreProvider = ({children}) => {
             languagesCountriesIncludes,
             isHomePage,
             setHomePage,
+            autoComplete,
         }}>
             {children}
         </CountryStore.Provider>

@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import {Outlet, useNavigate} from "react-router-dom";
 import {LogoStyled, SearchCountry} from "../../UI";
-import {AboutFooter} from "../../components/About";
 import {CountryStore} from "../../Store";
+import {AboutFooter, AutoCompleteTexBox} from "../../components";
 
 const SearchStyled = styled.section`
   display: flex;
@@ -121,6 +121,7 @@ export const Search_ = () => {
         "select__line__init");
     const [input, setInput] = useState("");
     const [invalidInput, setInvalidInput] = useState("");
+    const [autoComplete, setAutoComplete] = useState([]);
     const context = useContext(CountryStore);
 
     useEffect(() => {
@@ -129,14 +130,18 @@ export const Search_ = () => {
 
     let navigate = useNavigate();
 
-    const languageOptionHandler = useCallback (() => {
+    const languageOptionHandler = useCallback(() => {
         setLanguageOption(true);
         setOptionAnimationStyle("select__line");
-    },[])
+    }, [])
 
     useEffect(() => {
         setInvalidInput("");
-    }, [input]);
+        setAutoComplete([]);
+        if (input.length > 1) {
+            setAutoComplete(context.autoComplete(input.trim()));
+        }
+    }, [input, context]);
 
     const findCountryHandler = useCallback((e) => {
         e.preventDefault()
@@ -159,16 +164,34 @@ export const Search_ = () => {
     useEffect(() => {
         document.onkeydown = (e) => {
             e = e || window.event;
-            if (e.keyCode === 37) { //left arrow
-                setLanguageOption(false)
-            } else if (e.keyCode === 39) { //right arrow
-                languageOptionHandler()
+            if (e.key === "Tab") {
+                e.preventDefault()
+                if (languageOption) {
+                    setLanguageOption(false);
+                } else {
+                    languageOptionHandler()
+
+                }
+            }
+            //Esc
+            if (e.key === "Escape") {
+                e.preventDefault()
+                // setInput("");
+                setAutoComplete([]);
             }
         }
-    }, [languageOptionHandler]);
+        return () => {
+            document.onkeydown = null;
+        }
+    }, [languageOptionHandler, languageOption]);
 
 
-    return <SearchStyled searching={!!input}>
+    const clickSectionHandler =()=>{
+        setAutoComplete([]);
+    }
+
+
+    return <SearchStyled searching={!!input} onClick={clickSectionHandler}>
         <LogoStyled>
             <span>country</span>
             <span>SEARCH</span>
@@ -183,6 +206,8 @@ export const Search_ = () => {
             className={"input"}/>
         {!!invalidInput &&
          <span className={"invalid__input"}>{invalidInput}</span>}
+        {autoComplete.length > 0 &&
+         <AutoCompleteTexBox autoComplete={autoComplete}/>}
 
 
         <OptionsSearch>

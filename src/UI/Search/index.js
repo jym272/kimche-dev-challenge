@@ -20,7 +20,7 @@ const SearchInput = styled.input.attrs(
   border: none;
   font-size: 2em;
   border-radius: 5px 0 0 5px;
-  padding: 0 20px;
+  padding: 0 30px;
   font-family: 'Titillium Web', sans-serif;
 
   &:focus {

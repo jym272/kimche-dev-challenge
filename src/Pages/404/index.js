@@ -58,17 +58,8 @@ const NotFoundStyled = styled.div`
           left: 0;
           transition: all 0.3s ease-in-out;
           &:hover {
-            opacity: 0.9;
-            animation: increase-borders 5.0s ease-in-out forwards;
+            opacity: 0.8;
             cursor: pointer;
-          }
-          @keyframes increase-borders {
-            0% {
-              border-radius: 3%;
-            }
-            100% {
-              border-radius: 10%;
-            }
           }
         }
       }
@@ -104,10 +95,6 @@ export const NotFound = () => {
         window.location.href = "/";
     }
 
-    const addStyleToImgElementHandler = () => {
-        refImage.current.style.opacity = 0.9;
-        refImage.current.style.animation = "increase-borders 5.0s ease-in-out forwards";
-    }
 
     return (
         <NotFoundStyled>
@@ -115,7 +102,7 @@ export const NotFound = () => {
                 <h1 onClick={rickRolledHandler}>not Found, but is ok..</h1>
                 <div>
                     <div className={"image__container"}>
-                        <img ref={refImage} onMouseEnter={addStyleToImgElementHandler} onClick={returnToHomeHandler} src="/notFound.jpg" alt="404"/>
+                        <img ref={refImage}  onClick={returnToHomeHandler} src="/notFound.jpg" alt="404"/>
                     </div>
                     <div className={"legend"}>
                         <span>{"design by:"}</span>
