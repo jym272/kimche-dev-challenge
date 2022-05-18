@@ -53,3 +53,11 @@ se podría combinar con los *índices de database* descritos anteriormente.
 
 **Ejemplo:** Para el usuario con `user_id=808` la consulta en la master-table me 
 indicaría que consulte en la máquina *master-3* por ejemplo, y  con los índices `REG1-DIST5`
+
+
+## Principales técnologias implementadas
+
+1. **FrontEnd**: React, Styled Components 
+2. **BackEnd**/ **Data Structures**: Apollo Client, React Context, Árbol Trie para el autocompletado de países en la página principal, Hashmap de Continentes y Lenguajes para los países filtrados en la página por categorías.
+3. **Server**: instancia en Google Cloud Platform.
+4. **Web Server**: Configurado con Caddy Web Server.
