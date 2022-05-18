@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import devtools from "devtools-detect";
 
 const AutoCompleteStyled = styled.div`
   display: ${props => props.devToolsOpen ? 'none' : 'inline-block'};
@@ -116,16 +117,30 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
     })
 
 
+    const devToolsEventListener = useCallback((event)=>{
+        if (event.detail.isOpen )
+            setDevToolsOpen(true);
+        else
+            setDevToolsOpen(false);
+    },[])
+
     useEffect(() => {
         const items = document.querySelectorAll('.container__item');
         setItems(items);
-        window.addEventListener('devtoolschange', event => {
-            if (event.detail.isOpen)
-                setDevToolsOpen(true);
-            else
-                setDevToolsOpen(false);
-        });
-    }, [])
+        // reset
+        for (let i = 0; i < items.length; i++) {
+            items[i].classList.remove("autocomplete-active");
+            items[i].classList.remove("container__item__with__hover");
+        }
+        if(devtools.isOpen) { //useless but important, the library devtools
+            // must be present in the page
+            // setDevToolsOpen(true);
+        }
+        window.addEventListener('devtoolschange', devToolsEventListener);
+        return () => {
+            window.removeEventListener('devtoolschange', devToolsEventListener);
+        }
+    }, [devToolsEventListener,autoComplete])
 
     useEffect(() => {
         let currentFocus = 0;
@@ -133,11 +148,8 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
         if (focus !== undefined) {
             currentFocus = focus;
             direction = "up"
-            // const items = document.querySelectorAll('.container__item');
             for (let i = 0; i < items.length; i++) {
                 items[i].classList.remove("autocomplete-active");
-                // items[i].classList.remove("container__item__with__hover");
-
             }
         }
         const input = document.getElementById('search');
@@ -145,7 +157,6 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
             if (e.keyCode === 40) {
                 e.preventDefault()
                 // down arrow
-                // const items = document.querySelectorAll('.container__item');
                 if (currentFocus >= items.length) currentFocus = 0;
                 for (let i = 0; i < items.length; i++) {
                     items[i].classList.remove("autocomplete-active");
@@ -156,7 +167,7 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
                     if (currentFocus >= items.length) currentFocus = 0;
                 }
                 items[currentFocus].classList.add("autocomplete-active");
-                setIndexWithKeys(currentFocus); //new
+                setIndexWithKeys(currentFocus);
                 currentFocus++;
                 direction = 'down';
                 setMouseIsActive(false);
@@ -165,9 +176,7 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
             }
             if (e.keyCode === 38) {
                 e.preventDefault()
-
                 // up arrow
-                // const items = document.querySelectorAll('.container__item');
                 if (currentFocus === 0) currentFocus = items.length;
                 for (let i = 0; i < items.length; i++) {
                     items[i].classList.remove("autocomplete-active");
@@ -182,7 +191,7 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
                 items[currentFocus].classList.add("autocomplete-active");
                 direction = 'up';
                 setMouseIsActive(false);
-                setIndexWithKeys(currentFocus); //new
+                setIndexWithKeys(currentFocus);
             }
         }
         input.addEventListener("keydown", listener);

@@ -152,7 +152,7 @@ export const Search_ = () => {
         if (!regex.test(input.trim())) {
             setInvalidInput(
                 "at least 2" + " alphabetic characters and special characters" +
-                " like \"[\" \"]\" and \".\" are allowed");
+                " like [ ] and '.' are allowed");
             return
         }
 
@@ -173,10 +173,8 @@ export const Search_ = () => {
 
                 }
             }
-            //Esc
             if (e.key === "Escape") {
                 e.preventDefault()
-                // setInput("");
                 setAutoComplete([]);
             }
         }
