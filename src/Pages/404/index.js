@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {createRef} from "react";
 
 const NotFoundStyled = styled.div`
   user-select: none;
@@ -86,8 +85,6 @@ const NotFoundStyled = styled.div`
 `;
 
 export const NotFound = () => {
-    const refImage = createRef();
-
     const rickRolledHandler = () => {
         window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
     }
@@ -102,7 +99,7 @@ export const NotFound = () => {
                 <h1 onClick={rickRolledHandler}>not Found, but is ok..</h1>
                 <div>
                     <div className={"image__container"}>
-                        <img ref={refImage}  onClick={returnToHomeHandler} src="/notFound.jpg" alt="404"/>
+                        <img onClick={returnToHomeHandler} src="/notFound.jpg" alt="404"/>
                     </div>
                     <div className={"legend"}>
                         <span>{"design by:"}</span>
