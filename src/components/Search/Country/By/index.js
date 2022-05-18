@@ -1,9 +1,8 @@
-import {useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import styled from 'styled-components'
 import {SearchCountry} from "../../../../UI";
 import {GridOfCountries} from "../../../Grid";
-import React from "react";
 
 const CountriesByStyled = styled.section`
   display: flex;
@@ -18,6 +17,7 @@ const CountriesByStyled = styled.section`
     width: 100%;
     max-width: 1200px;
     margin: 8px auto 0px auto;
+
     .search__button_svg {
       border-radius: 0 5px 5px 0;
       background: ${props => props.searching ? '#E97C57' : 'white'};
@@ -55,20 +55,35 @@ const CountriesByStyled = styled.section`
   //}
 `;
 
- export const CountriesBy_ = ({array, country_name, option: option_}) => {
+export const CountriesBy_ = ({array, country_name, option: option_}) => {
 
+    const ReturningHomeArray = useMemo( ()=>["Returning Home...", "Returning" +
+                                                              " Home..",
+        "Returning Home.", "Returning Home"], [])
     const [country_name_filter, setCountryNameFilter] = useState(country_name);
     const [infoMessage, setInfoMessage] = useState('');
+    const [returningHome, setReturningHome] = useState(ReturningHomeArray[0]);
     const navigate = useNavigate();
 
     useEffect(() => {
         setInfoMessage('');
         let timer;
+        const interval_ms=500;
+        setReturningHome(ReturningHomeArray[0]);
         switch (country_name_filter.trim().length) {
             case 0:
                 timer = setTimeout(() => {
-                    navigate(`/search/`);
-                }, 1500);
+                    setReturningHome(ReturningHomeArray[1]);
+                    timer = setTimeout(() => {
+                        setReturningHome(ReturningHomeArray[2]);
+                        timer = setTimeout(() => {
+                            setReturningHome(ReturningHomeArray[3]);
+                            timer = setTimeout(() => {
+                                navigate(`/search/`);
+                            }, interval_ms);
+                        }, interval_ms);
+                    }, interval_ms);
+                }, interval_ms);
                 break;
             case 1:
                 timer = setTimeout(() => {
@@ -80,7 +95,7 @@ const CountriesByStyled = styled.section`
                 break;
         }
         return () => clearTimeout(timer);
-    }, [country_name_filter, navigate,option_]);
+    }, [country_name_filter, navigate,option_, ReturningHomeArray]);
 
 
     const submitHandler = (e) => {
@@ -93,7 +108,7 @@ const CountriesByStyled = styled.section`
     return <CountriesByStyled searching={!!country_name_filter}>
         <SearchCountry
             Handler={submitHandler}
-            placeholder={"Returning home..."}
+            placeholder={returningHome}
             className={"input"}
             valueInput={country_name_filter}
             onChangeInput={(e) => setCountryNameFilter(e.target.value)}/>
@@ -108,7 +123,8 @@ const CountriesByStyled = styled.section`
         {/*    }}>language</span>*/}
 
         {/*</div>*/}
-        <GridOfCountries array={array_} option={option_} country_name={country_name_filter}/>
+        <GridOfCountries array={array_} option={option_}
+                         country_name={country_name_filter}/>
 
     </CountriesByStyled>
 }
