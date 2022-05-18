@@ -55,7 +55,7 @@ se podría combinar con los *índices de database* descritos anteriormente.
 indicaría que consulte en la máquina *master-3* por ejemplo, y  con los índices `REG1-DIST5`
 
 
-## Principales técnologias implementadas
+## Principales tecnologías implementadas
 
 1. **FrontEnd**: React, Styled Components 
 2. **BackEnd**/ **Data Structures**: Apollo Client, React Context, Árbol Trie para el autocompletado de países en la página principal, Hashmap de Continentes y Lenguajes para los países filtrados en la página por categorías.
