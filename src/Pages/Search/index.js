@@ -4,6 +4,7 @@ import {Outlet, useNavigate} from "react-router-dom";
 import {LogoStyled, SearchCountry} from "../../UI";
 import {CountryStore} from "../../Store";
 import {AboutFooter, AutoCompleteTexBox} from "../../components";
+import {Helmet} from "react-helmet-async";
 
 const SearchStyled = styled.section`
   display: flex;
@@ -190,6 +191,10 @@ export const Search_ = () => {
 
 
     return <SearchStyled searching={!!input} onClick={clickSectionHandler}>
+        <Helmet>
+            <meta charSet="utf-8" />
+            <title>Country Search</title>
+        </Helmet>
         <LogoStyled>
             <span>country</span>
             <span>SEARCH</span>

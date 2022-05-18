@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const FooterStyled = styled.footer`
-  background-color: rgba(198, 88, 52, 0.71);
+  background-color: rgba(198, 88, 52, 0.85);
   height: 3rem;
   display: flex;
   flex-wrap: wrap;
@@ -14,6 +14,11 @@ const FooterStyled = styled.footer`
   color: white;
   white-space: nowrap; //TODO: fix for mobile site 
   overflow: hidden;
+  //font-family: 'Ubuntu', sans-serif;
+  //font-family: 'Roboto', sans-serif;
+
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1.1rem;
 
 
   span:first-of-type {

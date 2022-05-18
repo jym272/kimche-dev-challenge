@@ -3,9 +3,9 @@
   "name": "Find your country, get images and map",
   "icons": [
     {
-      "src": "img.png",
+      "src": "favicon.ico",
       "sizes": "24x24",
-      "type": "image/png"
+      "type": "image/x-icon"
     }
   ],
   "start_url": ".",

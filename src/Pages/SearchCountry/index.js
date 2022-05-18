@@ -3,6 +3,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {CountriesBy} from "../../components";
 import {CountryStore} from "../../Store";
 import {NotFound} from "../404";
+import {Helmet} from "react-helmet-async";
 
 
 export const SearchCountryComponent_ = () => {
@@ -51,11 +52,17 @@ export const SearchCountryComponent_ = () => {
 
     return <>
         {incorrectOption ? <NotFound/> :
-         <CountriesBy
-             option={option}
-             array={countriesArray}
-             country_name={country_name}
-         />
+         <>
+             <Helmet>
+                 <meta charSet="utf-8" />
+                 <title>{`Countries by ${option}`}</title>
+             </Helmet>
+             <CountriesBy
+                 option={option}
+                 array={countriesArray}
+                 country_name={country_name}
+             />
+         </>
         }
     </>
 

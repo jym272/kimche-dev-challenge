@@ -112,7 +112,7 @@ export const ServerError = () => {
                         <img ref={refImage}  onClick={returnToHomeHandler} src="/serverError.jpg" alt="404"/>
                     </div>
                     <div className={"legend"}>
-                        <span>{"design by:"}</span>
+                        <span>{"poster by:"}</span>
                         <a href="https://dribbble.com/SepidehMirtaleby" target="_blank"
                            rel="noopener noreferrer">
                             &nbsp;Sepideh Mirtalebi

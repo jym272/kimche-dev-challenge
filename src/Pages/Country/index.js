@@ -6,6 +6,7 @@ import {BackButton} from "../../UI";
 import {LoadingCountry} from "../../components";
 import {CountryStore} from "../../Store";
 import {ServerError} from "../500";
+import {Helmet} from "react-helmet-async";
 
 
 const CountryGridStyled = styled.section`
@@ -281,6 +282,10 @@ export const Country = () => {
 
 
     return (<>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{data.country.name ? `${data.country.name}${data.country.capital?"-"+data.country.capital:""}`:"Country"}</title>
+            </Helmet>
             {lookup && option && <BackButton onClick={() => {
                 navigate(`/search/${lookup}?option=${option}`)
             }}/>}

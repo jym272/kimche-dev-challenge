@@ -10,8 +10,7 @@ export const LogoStyled = styled.div`
   margin-bottom: 40px;
   border-radius: 50%;
   color: #fff;
-  //width: 100%;
-  //height: 100px;
+  font-family: 'Ubuntu', sans-serif;
   span:first-of-type {
     font-size: 3em;
     font-weight: 500;

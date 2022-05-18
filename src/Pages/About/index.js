@@ -2,6 +2,7 @@ import React, {useContext, useEffect} from "react";
 import {CountryStore} from "../../Store";
 
 import styled, {ThemeContext} from "styled-components";
+import {Helmet} from "react-helmet-async";
 
 const AboutStyled = styled.section`
   user-select: none;
@@ -166,6 +167,10 @@ export const About = () => {
     }, [context])
 
     return (<AboutStyled className="about">
+        <Helmet>
+            <meta charSet="utf-8" />
+            <title>About</title>
+        </Helmet>
         <div className={"attr"}>
             <div className={"about"}>
                 <h1>Written and Design by Jorge Clavijo</h1>

@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import {Helmet} from "react-helmet-async";
+import React from "react";
 
 const NotFoundStyled = styled.div`
   user-select: none;
@@ -95,6 +97,10 @@ export const NotFound = () => {
 
     return (
         <NotFoundStyled>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>404</title>
+            </Helmet>
             <div className={"attr"}>
                 <h1 onClick={rickRolledHandler}>not Found, but is ok..</h1>
                 <div>
@@ -102,10 +108,10 @@ export const NotFound = () => {
                         <img onClick={returnToHomeHandler} src="/notFound.jpg" alt="404"/>
                     </div>
                     <div className={"legend"}>
-                        <span>{"design by:"}</span>
-                        <a href="https://odama.io/" target="_blank"
+                        <span>{"poster by:"}</span>
+                        <a href="https://dribbble.com/shots/18107062-Search-Not-Found-Illustration" target="_blank"
                            rel="noopener noreferrer">
-                            &nbsp;Odama Team
+                            &nbsp;Labib Ahmadin
                         </a>
                     </div>
                 </div>

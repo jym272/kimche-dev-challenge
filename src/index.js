@@ -4,6 +4,7 @@ import App from './App';
 import {ApolloClient, ApolloProvider, InMemoryCache} from "@apollo/client";
 import TYPE_DEFS from "./schema.graphql";
 import {StoreProvider} from "./Store";
+import {HelmetProvider} from "react-helmet-async";
 
 
 const client = new ApolloClient(
@@ -18,12 +19,14 @@ const client = new ApolloClient(
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <ApolloProvider client={client}>
-        <StoreProvider>
-            <React.StrictMode>
-                <App/>
-            </React.StrictMode>
-        </StoreProvider>
-    </ApolloProvider>
+    <HelmetProvider>
+        <ApolloProvider client={client}>
+            <StoreProvider>
+                <React.StrictMode>
+                    <App/>
+                </React.StrictMode>
+            </StoreProvider>
+        </ApolloProvider>
+    </HelmetProvider>
 );
 
