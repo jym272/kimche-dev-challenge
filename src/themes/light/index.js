@@ -14,6 +14,7 @@ export const LightTheme = {
         },
         grid_card: {
             background: 'linear-gradient(0deg, #eeee 0%, rgba(213, 204, 204, 0.93) 100%)',
+            border: '1px solid rgba(213, 204, 204, 0.80)',
         },
     },
 }

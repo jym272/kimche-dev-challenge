@@ -1,7 +1,7 @@
 import {ListOfCountries} from "../Countries";
 import styled from "styled-components";
 import {useEffect, useState} from "react";
-import {ListStyled} from "../UI";
+import {ListStyled} from "../../UI";
 import React from "react";
 
 
@@ -15,6 +15,7 @@ const NotFoundStyled = styled.section`
 `;
 
 const GridStyled = styled.section`
+  user-select: none;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   grid-gap: 1.8rem;
@@ -38,7 +39,7 @@ const GridStyled = styled.section`
     height: 98%;
     background: ${({theme}) => theme.UI.grid_card.background};
     border-radius: 15px;
-    border: 1px solid rgba(213, 204, 204, 0.93);
+    border: ${({theme}) => theme.UI.grid_card.border};
     overflow: hidden;
 
     &::before,
@@ -114,7 +115,7 @@ export const GridOfCountries_ = ({array, option, country_name}) => {
             }
         );
         setGrid(grid__);
-    }, [array, option]);
+    }, [array, option, country_name]);
 
     return <>
         {option === "language" && grid.length === 0 ?

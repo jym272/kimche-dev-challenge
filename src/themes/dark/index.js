@@ -14,6 +14,7 @@ export const DarkTheme= {
         },
         grid_card: {
             background: '#303340',
+            border: '1px solid rgba(213, 204, 204, 0.33)',
         },
     },
 }

@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# Kimche Dev Challenge
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> **Deploy** del proyecto [kimchedevchallenge.com](https://www.kimchedevchallenge.com/).
 
-## Available Scripts
+## Pregunta abierta
 
-In the project directory, you can run:
+"La tabla que contiene la información correspondiente a la asistencia diaria de un niño en un colegio tiene 90 millones de filas. Todas las tablas del sistema existen en la misma BDD en MySQL. La lógica del backend que actualiza la información correspondiente al pasar la asistencia tiene un tiempo de servicio p95 de 10 segundos. El equipo está interesado en bajar este tiempo para mejorar la experiencia del usuario (y porque nos gusta pensar en Kimche como un Ferrari). ¿Qué propondrías para enfrentar el problema? Esta pregunta es abierta, no hay respuestas malas. Puedes proponer arquitectura, tecnologías, diseño, etc."
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Respuesta
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+> **Índices**: 
 
-### `npm run build`
+Se podría clasificar a las escuelas en regiones y luego estas seccionarlas en distritos. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Se modifica el esquema de la tabla y se crea **índices de Database** para realizar *queries* and *writes* de forma eficiente.
+Para la implementación de índices se podría usar Árboles Balanceados, Árboles B+, Hashes
+y de esta forma se mejora la complejidad de las *queries* dependiendo de la estructura de datos que se elija.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Ejemplo:** Necesito escribir la asistencia para un usuario con `user_id=808`. En una database de índices obtengo el 
+índice `REG1-DIST5`, y con esta información realizo el **write** en la tabla.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+> **Master-Slave**:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Dependiendo del volumen de lectura/queries podría implementar una configuración master-slave, y tener tantas *Slaves-DB* como necesite, 
+de esta forma la *master-DB* la uso solo para realizar **writes**.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Si necesito *consistencia* en los datos (obtener la información de asistencia de un alumno de forma inmediata) 
+se podría implementar *database caching*.
+De esta forma siempre se dispone de información actualizada. 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+De la misma manera uso tantas máquinas de caching como se necesite, el objetivo es el mismo:
+dejar a la *master-DB* exclusiva para realizar **writes**.
 
-## Learn More
+> **Sharding**:
+> 
+Para optimizar los writes se usa *database sharding*, en el cual, se divide a la DB en multiples master databases.
+Ya que solo se tiene una tabla y es muy grande en en el problema propuesto, se escala usando *horizontal sharding*, 
+la tabla única  se divide en multiples databases, de esta forma, se escala el tiempo de escritura.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Una técnica para realizar esta división sería usar la operacion `MOD` con el user_id y el número 
+total de máquinas que se tienen disponibles para realizar la asignación. La operacion sería `user_id % 3` por ejemplo.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![alt text](public/sharding.png)
 
-### Code Splitting
+Luego se podría crear una `master-table` encargada del algoritmo de sharding que indicaría 
+para cuál usuario corresponde su máquina e incluso en esta master-table 
+se podría combinar con los *índices de database* descritos anteriormente.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Ejemplo:** Para el usuario con `user_id=808` la consulta en la master-table me 
+indicaría que consulte en la máquina *master-3* por ejemplo, y  con los índices `REG1-DIST5`

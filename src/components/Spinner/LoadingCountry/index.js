@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {Helmet} from "react-helmet-async";
 
 //3D Loading Spinner: https://codepen.io/HughieW/pen/NPbNEE
 const ContainerStyled = styled.div`
@@ -59,6 +60,10 @@ const LoadingSpinnerStyled = styled.div`
 
 export const LoadingCountry = () => {
     return <ContainerStyled>
+        <Helmet>
+            <meta charSet="utf-8" />
+            <title>Searching...</title>
+        </Helmet>
         <LoadingSpinnerStyled>
             <i>{}</i>
         </LoadingSpinnerStyled>
