@@ -73,6 +73,8 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
     const [focus, setFocus] = useState(undefined);
     const [items, setItems] = useState([]);
     const [devToolsOpen, setDevToolsOpen] = useState(false);
+    const [mouseIsActive, setMouseIsActive] = useState(true);
+    const [indexWithKeys, setIndexWithKeys] = useState(0);
 
     const navigate = useNavigate();
 
@@ -84,6 +86,7 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
     const Handler = (index) => {
         if (items.length > 0) {
             items[index].classList.add("container__item__with__hover");
+            setMouseIsActive(true);
             setFocus(index);
         }
     }
@@ -153,13 +156,16 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
                     if (currentFocus >= items.length) currentFocus = 0;
                 }
                 items[currentFocus].classList.add("autocomplete-active");
+                setIndexWithKeys(currentFocus); //new
                 currentFocus++;
                 direction = 'down';
+                setMouseIsActive(false);
 
 
             }
             if (e.keyCode === 38) {
                 e.preventDefault()
+
                 // up arrow
                 // const items = document.querySelectorAll('.container__item');
                 if (currentFocus === 0) currentFocus = items.length;
@@ -175,25 +181,8 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
                 if (currentFocus < 0) currentFocus = items.length - 1;
                 items[currentFocus].classList.add("autocomplete-active");
                 direction = 'up';
-                return false;
-
-            }
-            if (e.keyCode === 13) {
-                // enter
-                if (currentFocus === 0 && !direction) {
-                    return
-                }
-                const items = document.querySelectorAll('.item');
-                let element;
-                if (direction === 'up') {
-                    element = items[currentFocus];
-                } else {
-                    element = items[currentFocus - 1];
-                }
-                //get id
-                const id = element.getAttribute('id');
-                navigate(`/country/${id}`);
-
+                setMouseIsActive(false);
+                setIndexWithKeys(currentFocus); //new
             }
         }
         input.addEventListener("keydown", listener);
@@ -201,6 +190,22 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
             input.removeEventListener("keydown", listener);
         }
     }, [navigate, focus, items])
+
+
+    useEffect(() => {
+        document.onkeydown = (e) => {
+            e = e || window.event;
+            if (e.key === "Enter" && !mouseIsActive) {
+                items[indexWithKeys].click();
+
+            }
+        }
+        return () => {
+            document.onkeydown = null;
+        }
+
+    }, [indexWithKeys, mouseIsActive, items])
+
 
     return <AutoCompleteStyled devToolsOpen={devToolsOpen}>
         <section>
