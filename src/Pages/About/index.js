@@ -173,7 +173,7 @@ export const About = () => {
         </Helmet>
         <div className={"attr"}>
             <div className={"about"}>
-                <h1>Written and Design by Jorge Clavijo</h1>
+                <h1>Written and Designed by Jorge Clavijo</h1>
                 <div className={"repo"}>
                     <h2>Repository: </h2>
                     <svg
