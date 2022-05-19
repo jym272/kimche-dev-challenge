@@ -5,6 +5,7 @@ import {LogoStyled, SearchCountry} from "../../UI";
 import {CountryStore} from "../../Store";
 import {AboutFooter, AutoCompleteTexBox} from "../../components";
 import {Helmet} from "react-helmet-async";
+import useEventListener from "@use-it/event-listener";
 
 const SearchStyled = styled.section`
   display: flex;
@@ -115,7 +116,6 @@ const OptionsSearch = styled.div`
 
 `;
 
-
 export const Search_ = () => {
     const [languageOption, setLanguageOption] = useState(false);
     const [optionAnimationStyle, setOptionAnimationStyle] = useState(
@@ -159,40 +159,32 @@ export const Search_ = () => {
 
         navigate(`/search/${input}?option=${!languageOption ? "continent" :
                                             "language"}`);
-    },[input, languageOption, navigate]);
+    }, [input, languageOption, navigate]);
 
+    const keyHandler = useCallback((e) => {
+        const key = e.key;
+        if (['27', 'Escape'].includes(String(key))) {
+            setAutoComplete([]);
+        }
+        if (key === "Tab") {
+            e.preventDefault()
+            if (languageOption) {
+                setLanguageOption(false);
+            } else {
+                languageOptionHandler()
 
-    useEffect(() => {
-        document.onkeydown = (e) => {
-            e = e || window.event;
-            if (e.key === "Tab") {
-                e.preventDefault()
-                if (languageOption) {
-                    setLanguageOption(false);
-                } else {
-                    languageOptionHandler()
-
-                }
-            }
-            if (e.key === "Escape") {
-                e.preventDefault()
-                setAutoComplete([]);
             }
         }
-        return () => {
-            document.onkeydown = null;
-        }
-    }, [languageOptionHandler, languageOption]);
+    }, [languageOption, languageOptionHandler])
+
+    useEventListener('keydown', keyHandler);
 
 
-    const clickSectionHandler =()=>{
+    return <SearchStyled searching={!!input} onClick={() => {
         setAutoComplete([]);
-    }
-
-
-    return <SearchStyled searching={!!input} onClick={clickSectionHandler}>
+    }}>
         <Helmet>
-            <meta charSet="utf-8" />
+            <meta charSet="utf-8"/>
             <title>Country Search</title>
         </Helmet>
         <LogoStyled>

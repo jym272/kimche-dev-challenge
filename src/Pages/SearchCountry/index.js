@@ -1,9 +1,10 @@
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {CountriesBy} from "../../components";
 import {CountryStore} from "../../Store";
 import {NotFound} from "../404";
 import {Helmet} from "react-helmet-async";
+import useEventListener from "@use-it/event-listener";
 
 
 export const SearchCountryComponent_ = () => {
@@ -18,17 +19,13 @@ export const SearchCountryComponent_ = () => {
     const [incorrectOption, setIncorrectOption] = useState(false);
     const navigate = useNavigate();
 
-
-    useEffect(() => {
-
-        document.onkeydown = (e) => {
-            e = e || window.event;
-            if (e.key === "Escape") {
-                navigate('/');
-            }
+    const keyHandler = useCallback(({key}) => {
+        if (['27', 'Escape'].includes(String(key))) {
+            navigate('/');
         }
-    }, [navigate])
+    }, [navigate]);
 
+    useEventListener('keydown', keyHandler);
 
     useEffect(() => {
         context.setHomePage(false)
@@ -54,7 +51,7 @@ export const SearchCountryComponent_ = () => {
         {incorrectOption ? <NotFound/> :
          <>
              <Helmet>
-                 <meta charSet="utf-8" />
+                 <meta charSet="utf-8"/>
                  <title>{`Countries by ${option}`}</title>
              </Helmet>
              <CountriesBy

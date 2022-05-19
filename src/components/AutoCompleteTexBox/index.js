@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import {useCallback, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import devtools from "devtools-detect";
+import useEventListener from "@use-it/event-listener";
 
 const AutoCompleteStyled = styled.div`
   display: ${props => props.devToolsOpen ? 'none' : 'inline-block'};
@@ -117,12 +118,12 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
     })
 
 
-    const devToolsEventListener = useCallback((event)=>{
-        if (event.detail.isOpen )
+    const devToolsEventListener = useCallback((event) => {
+        if (event.detail.isOpen)
             setDevToolsOpen(true);
         else
             setDevToolsOpen(false);
-    },[])
+    }, [])
 
     useEffect(() => {
         const items = document.querySelectorAll('.container__item');
@@ -132,7 +133,7 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
             items[i].classList.remove("autocomplete-active");
             items[i].classList.remove("container__item__with__hover");
         }
-        if(devtools.isOpen) { //useless but important, the library devtools
+        if (devtools.isOpen) { //useless but important, the library devtools
             // must be present in the page
             // setDevToolsOpen(true);
         }
@@ -140,7 +141,7 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
         return () => {
             window.removeEventListener('devtoolschange', devToolsEventListener);
         }
-    }, [devToolsEventListener,autoComplete])
+    }, [devToolsEventListener, autoComplete])
 
     useEffect(() => {
         let currentFocus = 0;
@@ -200,27 +201,17 @@ export const AutoCompleteTexBox = ({autoComplete}) => {
         }
     }, [navigate, focus, items])
 
-
-    useEffect(() => {
-        document.onkeydown = (e) => {
-            e = e || window.event;
-            if (e.key === "Enter" && !mouseIsActive) {
-                items[indexWithKeys].click();
-
-            }
+    const keyHandler = useCallback(({key}) => {
+        if (['13', 'Enter'].includes(String(key)) && !mouseIsActive) {
+            items[indexWithKeys].click();
         }
-        return () => {
-            document.onkeydown = null;
-        }
-
     }, [indexWithKeys, mouseIsActive, items])
 
+    useEventListener('keydown', keyHandler);
 
     return <AutoCompleteStyled devToolsOpen={devToolsOpen}>
         <section>
             {box}
         </section>
-
     </AutoCompleteStyled>
-
 }

@@ -6,7 +6,7 @@ import {
     About,
     Country, Home, NotFound,
     Search,
-    SearchCountryComponent
+    SearchCountryComponent, ServerError
 } from "./Pages";
 
 
@@ -64,6 +64,7 @@ function App() {
                     </Route>
 
                     <Route path="country/:country_id" element={<Country/>}/>
+                    <Route path="500" element={<ServerError/>}/>
                 </Route>
                 <Route
                     path="*"

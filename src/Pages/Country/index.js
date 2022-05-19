@@ -7,6 +7,7 @@ import {LoadingCountry} from "../../components";
 import {CountryStore} from "../../Store";
 import {ServerError} from "../500";
 import {Helmet} from "react-helmet-async";
+import useEventListener from "@use-it/event-listener";
 
 
 const CountryGridStyled = styled.section`
@@ -169,7 +170,10 @@ export const Country = () => {
                         photos_.push(photoObject)
                     }
                     setPhotosArray(photos_)
-                });
+                }).catch(err => {
+                    console.log(err)
+                    return navigate('/500')
+                })
 
             });
         }
@@ -260,31 +264,27 @@ export const Country = () => {
     }, [gridItems, google, place, data]) //gridItems must be full to run initMap
 
 
-    useEffect(() => {
-        document.onkeydown = (e) => {
-            e = e || window.event;
-            if (e.keyCode === 37 || e.key === "Escape") { //left arrow
-                if( lookup && option) {
-                    navigate(`/search/${lookup}?option=${option}`)
-                }else{
-                    navigate(`/`)
-                }
+    const keyHandler = useCallback(({key}) => {
+        if (['27', 'Escape', '37', 'ArrowLeft'].includes(String(key))) {
+            if (lookup && option) {
+                navigate(`/search/${lookup}?option=${option}`)
+            } else {
+                navigate(`/`)
             }
         }
-        return () => {
-            document.onkeydown = null
-        }
-    }, [lookup, option, navigate])
+    }, [navigate, lookup, option])
 
+    useEventListener('keydown', keyHandler);
 
     if (loading || gridItems.length === 0) return <LoadingCountry/>;
     if (error) return <ServerError/>;
 
-
     return (<>
             <Helmet>
-                <meta charSet="utf-8" />
-                <title>{data.country.name ? `${data.country.name}${data.country.capital?"-"+data.country.capital:""}`:"Country"}</title>
+                <meta charSet="utf-8"/>
+                <title>{data.country.name ?
+                        `${data.country.name}${data.country.capital ? "-" + data.country.capital : ""}` :
+                        "Country"}</title>
             </Helmet>
             {lookup && option && <BackButton onClick={() => {
                 navigate(`/search/${lookup}?option=${option}`)
