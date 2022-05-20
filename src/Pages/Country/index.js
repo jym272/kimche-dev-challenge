@@ -21,6 +21,20 @@ const CountryGridStyled = styled.section`
   min-height: 76vh;
   position: relative;
   justify-content: space-around;
+  --stager-delay: 0.35s;
+
+  @keyframes cardEntrance {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+      filter: blur(3px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0);
+    }
+  }
 
 
   .photos__ {
@@ -28,11 +42,34 @@ const CountryGridStyled = styled.section`
     object-fit: cover;
     transition: box-shadow 0.1s, transform 0.1s;
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.6);
+    animation: cardEntrance 0.7s ease-out;
+    animation-fill-mode: backwards;
+  }
 
-    &:hover {
-      //opacity: 0.5;
-      //object-fit: contain;
-    }
+  .photos__:nth-child(2) {
+    animation-delay: calc(var(--stager-delay) * 1.8);
+  }
+
+  .photos__:nth-child(3) {
+    animation-delay: calc(var(--stager-delay) * 2.5);
+
+  }
+
+  .photos__:nth-child(4) {
+    animation-delay: calc(var(--stager-delay) * 3);
+  }
+
+  .photos__:nth-child(5) {
+    animation-delay: calc(var(--stager-delay) * 3.5);
+
+  }
+
+  .photos__:nth-child(6) {
+    animation-delay: calc(var(--stager-delay) * 4);
+  }
+
+  .photos__:nth-child(7) {
+    animation-delay: calc(var(--stager-delay) * 5);
   }
 
   > * {
@@ -47,6 +84,9 @@ const CountryGridStyled = styled.section`
     width: 450px;
     max-height: 40vh;
     height: 40vh;
+    animation-delay: var(--stager-delay);
+    animation: cardEntrance 0.7s ease-out calc(var(--stager-delay) * 1);
+    animation-fill-mode: backwards;
   }
 
   .label__ {
@@ -90,7 +130,6 @@ export const Country = () => {
             id: useParams().country_id
         }
     });
-    const [photosArray, setPhotosArray] = useState([]);
     const [gridItems, setGridItems] = useState([]);
     const context = useContext(CountryStore)
     const navigate = useNavigate();
@@ -158,6 +197,7 @@ export const Country = () => {
                                  ""}, ${data.country.name}`;
                 getPlaceID(query).then(place => {
                     getPhotos(place.place_id).then(photos => {
+                        //Photos Array
                         const photos_ = []
                         const max = photos.length > 6 ? 6 : photos.length;
                         for (let i = 0; i < max; i++) {
@@ -169,7 +209,18 @@ export const Country = () => {
                             }
                             photos_.push(photoObject)
                         }
-                        setPhotosArray(photos_)
+                        const grid = []
+                        //Map Item
+                        const map = <div key={20} id="map" className={"google__map"}>{}</div>
+                        grid.push(map)
+                        photos_.forEach((value, index) => {
+                            grid.push(<img className={"photos__"} key={index}
+                                           src={value.photo}
+                                           alt={value.attr}/>)
+                        })
+                        //Grid Items
+                        setGridItems(grid)
+
                     }).catch(err => {
                         console.log(err)
                         setFetchingDataError(true);
@@ -186,26 +237,6 @@ export const Country = () => {
         context.setHomePage(false)
     }, [context])
 
-    const constructGrid = useCallback((photosArray) => {
-        const grid = []
-        const map = <div key={20} id="map" className={"google__map"}>{}</div>
-        grid.push(map)
-        photosArray.forEach((value, index) => {
-            grid.push(<img className={"photos__"} key={index}
-                           src={value.photo}
-                           alt={value.attr}/>)
-        })
-        return grid
-
-    }, [])
-
-
-    useEffect(() => {
-        if (photosArray.length > 0) {
-            const grid = constructGrid(photosArray);
-            setGridItems(grid)
-        }
-    }, [photosArray, constructGrid])
 
     useEffect(() => {
 
@@ -278,8 +309,8 @@ export const Country = () => {
 
     useEventListener('keydown', keyHandler);
 
-    if (loading || gridItems.length === 0) return <LoadingCountry/>;
     if (error || fetchingDataError) return <ServerError/>;
+    if (loading || gridItems.length === 0) return <LoadingCountry/>;
 
     return (<>
             <Helmet>

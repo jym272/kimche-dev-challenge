@@ -77,10 +77,11 @@ export const Home = () => {
             context.setLanguages(languages_);
         }
 
-    }, [data, context.setTrie, context.setLanguages, context.setContinents]) //don't add context: re-run every time
+    }, [data, context.setTrie, context.setLanguages, context.setContinents]) //don't add context: re-run
+                                                                             // every time
 
-    if (loading) return <LoadingIntro/>
     if (error) return <ServerError/>
+    if (loading) return <LoadingIntro/>
 
     // Outlet -> A component that renders the next match in a set of matches.
     return (
