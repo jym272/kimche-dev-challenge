@@ -64,7 +64,6 @@ const NotFoundStyled = styled.div`
           top: 0;
           left: 0;
           transition: all 0.8s ease-out;
-          cursor: pointer;
         }
 
         .go__to__home__appear,
@@ -73,7 +72,7 @@ const NotFoundStyled = styled.div`
           z-index: 2;
           bottom: 0;
           width: 99%;
-          height: 25%;
+          height: 20%;
           border-radius: 30% 30% 0 0;
           background: rgba(255, 255, 255, 0.09);
           box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -81,7 +80,7 @@ const NotFoundStyled = styled.div`
           -webkit-backdrop-filter: blur(5px);
           border: 1px solid rgba(255, 255, 255, 0.3);
           transform: translateY(100%);
-          transition: all 0.8s cubic-bezier(.17,.82,.88,.91);
+          transition: all 0.8s ease-out;
           svg{
             cursor: pointer;
             transition: all 0.3s ease-out;

@@ -2,14 +2,7 @@ import {ThemeProvider} from 'styled-components'
 import {DarkTheme, GlobalStyle, LightTheme} from "./themes";
 import {useState} from "react";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import {
-    About,
-    Country, Home, NotFound,
-    Search,
-    SearchCountryComponent, ServerError
-} from "./Pages";
-
-
+import {About, Country, Home, NotFound, Search, SearchCountryComponent, ServerError} from "./Pages";
 
 function App() {
     const themes = [DarkTheme, LightTheme];
@@ -46,27 +39,10 @@ function App() {
                     <Route path="about" element={<About/>}/>
                     <Route path="search/:country_name"
                            element={<SearchCountryComponent/>}>
-                        {/*  <Route
-                            index
-                            element={
-                                <div style={
-                                    {
-                                        padding: "1rem",
-                                        marginRight: "1rem",
-                                        textAlign: "right"
-                                    }}>
-                                    <Link className='btn' to="comments">Comments</Link>
-                                </div>
-                            }
-                        />*/}
-
-                        {/*<Route path="comments" element={<Comments/>}/>*/}
                     </Route>
-
                     <Route path="country/:country_id" element={<Country/>}/>
-                    <Route path="500" element={<ServerError/>}/>
                 </Route>
-                <Route
+                <Route //client side, status code 404 is not added.
                     path="*"
                     element={
                         <NotFound/>

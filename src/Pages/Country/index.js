@@ -96,6 +96,7 @@ export const Country = () => {
     const navigate = useNavigate();
     const google = useMemo(() => window.google, [])
     const [place, setPlace] = useState(null);
+    const [fetchingDataError, setFetchingDataError] = useState(false);
 
     const getPlaceID = useCallback((query) => {
         const request = {
@@ -151,33 +152,35 @@ export const Country = () => {
     useEffect(() => {
         if (google && data) {
             if (!data.country) {
-                return navigate('/404')
+                setFetchingDataError(true);
+            } else {
+                const query = `${data.country.capital ? data.country.capital :
+                                 ""}, ${data.country.name}`;
+                getPlaceID(query).then(place => {
+                    getPhotos(place.place_id).then(photos => {
+                        const photos_ = []
+                        const max = photos.length > 6 ? 6 : photos.length;
+                        for (let i = 0; i < max; i++) {
+                            const url_attr = photos[i].html_attributions
+                            const photoObject = {
+                                photo: photos[i].getUrl(
+                                    {maxWidth: 800, maxHeight: 600}),
+                                attr: url_attr[0] || `${data.country.name}` //getAttrId(url_attr[0])
+                            }
+                            photos_.push(photoObject)
+                        }
+                        setPhotosArray(photos_)
+                    }).catch(err => {
+                        console.log(err)
+                        setFetchingDataError(true);
+                    })
+
+                });
             }
 
-            const query = `${data.country.capital ? data.country.capital :
-                             ""}, ${data.country.name}`;
-            getPlaceID(query).then(place => {
-                getPhotos(place.place_id).then(photos => {
-                    const photos_ = []
-                    const max = photos.length > 6 ? 6 : photos.length;
-                    for (let i = 0; i < max; i++) {
-                        const url_attr = photos[i].html_attributions
-                        const photoObject = {
-                            photo: photos[i].getUrl(
-                                {maxWidth: 800, maxHeight: 600}),
-                            attr: url_attr[0] || `${data.country.name}` //getAttrId(url_attr[0])
-                        }
-                        photos_.push(photoObject)
-                    }
-                    setPhotosArray(photos_)
-                }).catch(err => {
-                    console.log(err)
-                    return navigate('/500')
-                })
 
-            });
         }
-    }, [data, google, getPhotos, getPlaceID, navigate]);
+    }, [data, google, getPhotos, getPlaceID]);
 
     useEffect(() => {
         context.setHomePage(false)
@@ -237,7 +240,6 @@ export const Country = () => {
 
             }
 
-
             function createMarkerPlace() {
                 const marker = new google.maps.Marker(
                     {
@@ -277,7 +279,7 @@ export const Country = () => {
     useEventListener('keydown', keyHandler);
 
     if (loading || gridItems.length === 0) return <LoadingCountry/>;
-    if (error) return <ServerError/>;
+    if (error || fetchingDataError) return <ServerError/>;
 
     return (<>
             <Helmet>
