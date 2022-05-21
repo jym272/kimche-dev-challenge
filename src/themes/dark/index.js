@@ -1,14 +1,14 @@
-export const DarkTheme= {
-    colors:{
+export const DarkTheme = {
+    colors: {
         primary: 'black',
         secondary: 'midnightblue',
         orange_bar: '#E97C57', //
     },
-    body:{
+    body: {
         background: '#252836',
         color: 'white',
     },
-    UI:{
+    UI: {
         navigation__button: {
             hover: "rgba(234, 234, 234, 0.3)",
         },
@@ -17,4 +17,7 @@ export const DarkTheme= {
             border: '1px solid rgba(213, 204, 204, 0.33)',
         },
     },
+    about: {
+        boxShadow: '0px 0px 20px 5px rgba(167, 134, 197, 0.3)',
+    }
 }

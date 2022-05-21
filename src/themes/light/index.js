@@ -17,4 +17,7 @@ export const LightTheme = {
             border: '1px solid rgba(213, 204, 204, 0.80)',
         },
     },
+    about: {
+        boxShadow: '0px 0px 20px 5px rgba(80, 108, 80, 0.7)',
+    }
 }

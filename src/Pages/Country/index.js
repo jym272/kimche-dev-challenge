@@ -9,6 +9,7 @@ import {ServerError} from "../500";
 import {Helmet} from "react-helmet-async";
 import useEventListener from "@use-it/event-listener";
 
+const NUMBER_OF_PHOTOS = 5;
 
 const CountryGridStyled = styled.section`
   display: flex;
@@ -21,18 +22,18 @@ const CountryGridStyled = styled.section`
   min-height: 76vh;
   position: relative;
   justify-content: space-around;
-  --stager-delay: 0.35s;
+  --stager-delay: 0.20s;
 
   @keyframes cardEntrance {
     from {
       opacity: 0;
-      transform: scale(0.9);
-      filter: blur(3px);
+      transform: scale(0.95);
+      //filter: blur(3px);
     }
     to {
       opacity: 1;
       transform: scale(1);
-      filter: blur(0);
+      //filter: blur(0);
     }
   }
 
@@ -47,29 +48,25 @@ const CountryGridStyled = styled.section`
   }
 
   .photos__:nth-child(2) {
-    animation-delay: calc(var(--stager-delay) * 1.8);
+    animation-delay: calc(var(--stager-delay) * 2);
   }
 
   .photos__:nth-child(3) {
-    animation-delay: calc(var(--stager-delay) * 2.5);
+    animation-delay: calc(var(--stager-delay) * 3);
 
   }
 
   .photos__:nth-child(4) {
-    animation-delay: calc(var(--stager-delay) * 3);
+    animation-delay: calc(var(--stager-delay) * 4);
   }
 
   .photos__:nth-child(5) {
-    animation-delay: calc(var(--stager-delay) * 3.5);
+    animation-delay: calc(var(--stager-delay) * 5);
 
   }
 
   .photos__:nth-child(6) {
-    animation-delay: calc(var(--stager-delay) * 4);
-  }
-
-  .photos__:nth-child(7) {
-    animation-delay: calc(var(--stager-delay) * 5);
+    animation-delay: calc(var(--stager-delay) * 6);
   }
 
   > * {
@@ -199,7 +196,7 @@ export const Country = () => {
                     getPhotos(place.place_id).then(photos => {
                         //Photos Array
                         const photos_ = []
-                        const max = photos.length > 6 ? 6 : photos.length;
+                        const max = photos.length > NUMBER_OF_PHOTOS ? NUMBER_OF_PHOTOS : photos.length;
                         for (let i = 0; i < max; i++) {
                             const url_attr = photos[i].html_attributions
                             const photoObject = {

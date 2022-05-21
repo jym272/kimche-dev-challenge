@@ -29,6 +29,7 @@ function App() {
         invertTheme: invertTheme,
         body: actualTheme.body,
         UI: actualTheme.UI,
+        about: actualTheme.about,
     }}>
         <GlobalStyle/>
         <BrowserRouter>
