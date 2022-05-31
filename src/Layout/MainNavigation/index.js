@@ -33,7 +33,6 @@ const NavigationStyled = styled.nav`
 
   nav ul {
     background: ${({theme}) => theme.body.background};
-    //background: white;
     height: 3rem; // + 3rem +
     margin: 0 auto;
     padding-top: 0.3rem; //0.3rem -> total height of header = 3.5rem
@@ -72,7 +71,7 @@ const MainNavigation = props => {
     const isFrontPage = context.isHomePage;
 
 
-    return <NavigationStyled darkTheme={isBlackThemeActive}>
+    return <NavigationStyled >
         <header>
             <OrangeBar/>
             <nav>

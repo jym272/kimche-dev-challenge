@@ -1,6 +1,6 @@
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useCallback, useContext, useEffect, useMemo, useState} from "react";
-import styled from "styled-components";
+import styled, {ThemeContext} from "styled-components";
 import {gql, useQuery} from "@apollo/client";
 import {BackButton} from "../../UI";
 import {LoadingCountry} from "../../components";
@@ -8,6 +8,7 @@ import {CountryStore} from "../../Store";
 import {ServerError} from "../500";
 import {Helmet} from "react-helmet-async";
 import useEventListener from "@use-it/event-listener";
+import {darkThemeGoogleMaps} from "../../themes";
 
 const NUMBER_OF_PHOTOS = 5;
 
@@ -119,6 +120,8 @@ const getAttrId = (string) => {
 
 export const Country = () => {
     const location = useLocation();
+    const { colors} = useContext(ThemeContext)
+    const isBlackThemeActive = colors.primary === 'black'
     const queryParams = new URLSearchParams(location.search);
     const option = queryParams.get('option');
     const lookup = queryParams.get('lookup');
@@ -249,6 +252,7 @@ export const Country = () => {
                 map = new google.maps.Map(mapElement, {
                     center: sydney,
                     zoom: 13,
+                    styles: isBlackThemeActive ?darkThemeGoogleMaps:[],
                 });
                 map.setCenter(place.location);
 
@@ -291,7 +295,7 @@ export const Country = () => {
 
             initMap();
         }
-    }, [gridItems, google, place, data]) //gridItems must be full to run initMap
+    }, [isBlackThemeActive,gridItems, google, place, data]) //gridItems must be full to run initMap
 
 
     const keyHandler = useCallback(({key}) => {

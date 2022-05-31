@@ -2,7 +2,7 @@ import MainNavigation from "./MainNavigation";
 import styled from "styled-components";
 import {CountryStore} from "../Store";
 import {useContext} from "react";
-import {Footer} from "../components/Footer";
+import {Footer} from "../components";
 
 
 

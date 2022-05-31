@@ -121,7 +121,6 @@ const LoadingIntroStyled = styled.main`
 
 `;
 
-
 export const LoadingIntro = () => {
     return <LoadingIntroStyled>
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
