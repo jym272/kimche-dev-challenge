@@ -1,6 +1,6 @@
 # Kimche Dev Challenge
 
-> **Deploy** del proyecto [kimchedevchallenge.com](https://www.kimchedevchallenge.com/).
+> **Deploy** del proyecto [kimchedevchallenge.com](https://kimche-dev-challenge.vercel.app).
 
 ## Pregunta abierta
 
